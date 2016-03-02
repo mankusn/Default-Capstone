@@ -32,6 +32,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/isaue/Documents/GitHub/Default-Capstone/apitest/json-20090211.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/Nick/Documents/GitHub/Default-Capstone/apitest/json-20090211.jar"/>
+>>>>>>> origin/nickl_api_stuff
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
