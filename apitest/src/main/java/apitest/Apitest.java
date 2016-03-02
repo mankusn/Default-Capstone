@@ -28,6 +28,31 @@ public class Apitest{
 		return makeAPIRequest("");
 	}
 	
+	// --- --- --- --- --- --- --- --- Tide API calls
+	
+	public static String makeTideAPIRequest() throws JSONException{
+		
+		String APIKey = "c1bceffff953053aa354659b63a67";
+		String latitude = "30.6014";
+		String longitude = "-96.3144"; //College Station, TX
+		String request = "http://api.worldweatheronline.com/free/v2/marine.ashx?key=" + APIKey + "&format=JSON&q=" + latitude + "," + longitude;
+		return request;
+	}
+	
+	public static JSONObject getTideForecast() throws JSONException{
+		String request = makeTideAPIRequest();
+		//System.out.println("req:: " + request);
+		RestTemplate restTemplate = new RestTemplate();
+		String tidePredict = restTemplate.getForObject(request, String.class);
+		JSONObject tideObj = new JSONObject(tidePredict);
+		
+		System.out.println(" ending test ");
+		
+		return tideObj;
+	}
+	
+	// --- --- --- --- --- --- --- --- End Tide API calls
+	
 	public static String makeAPIRequest(String date) throws JSONException{
 		String APIKey = "c62d91cb9c000638716e55cbc478330f"; //Replace this if we run out of requests on an account
 		String latitude = "30.6014";
@@ -114,9 +139,12 @@ public class Apitest{
 	public static void main(String args[]) throws JSONException{
 		//Currently retrieves the last week of temperatures
 		//Uses American units (Fahrenheit, MPH)
-		System.out.println("NEXT WEEK'S FORECAST\n--------------------");
-		nextWeeksForecast();
-		System.out.println("LAST WEEK'S WEATHER\n-------------------");
-		lastWeeksForecast();
+		//System.out.println("NEXT WEEK'S FORECAST\n--------------------");
+		//nextWeeksForecast();
+		//System.out.println("LAST WEEK'S WEATHER\n-------------------");
+		//lastWeeksForecast();
+		JSONObject a = getTideForecast();
+		System.out.println(a);
+		
 	}
 }
