@@ -26,6 +26,9 @@ public class Apitest{
 	
 	// -- -- -- -- -- - -- - -- -- -- -- - - - Security utils
 	
+	
+	// https://crackstation.net/hashing-security.htm#salt
+	
 	public static String encryptPasscode(String input) throws NoSuchAlgorithmException{
 		
 		// source: http://www.mkyong.com/java/java-sha-hashing-example/
