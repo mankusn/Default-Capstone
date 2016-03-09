@@ -23,6 +23,30 @@ public class Apitest{
 		String formattedDate = sdf.format(date);
 		return formattedDate;
 	}
+	
+	// -- -- -- -- -- - -- - -- -- -- -- - - - Security utils
+	
+	public static String encryptPasscode(String input) throws NoSuchAlgorithmException{
+		
+		// source: http://www.mkyong.com/java/java-sha-hashing-example/
+		MessageDigest md = MessageDigest.getInstance("SHA-512");
+		md.update(input.getBytes());
+		
+		byte byteData[] = md.digest();
+		
+		//convert byte to hex format
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < byteData.length; i++){
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+		}
+		
+		System.out.println("Hex format of encrypted password: " + sb.toString());
+		
+		return sb.toString();
+	}
+	
+	
+	// -- -- -- -- -- - - -- -- -- -- - - - -- End security utils
 
 	// --- --- --- --- --- --- --- --- Tide API calls
 	
@@ -261,6 +285,21 @@ public class Apitest{
 		System.out.println("data for 2100 is ");
 		//System.out.println(b);
 		System.out.println(isolateTideData(b));
+		
+		System.out.println("My password is... \n teamDefault482");
+		
+		String encryptedPassword = encryptPasscode("teamDefault482");
+		
+		System.out.println("checking orig password to encrypted... ");
+		
+		String plaintext = "teamDefault482";
+		
+		if(encryptPasscode(plaintext).equals( encryptedPassword)){
+			System.out.println("encrypted password hash matches plaintext hash");
+		}
+		else{
+			System.out.println("test failed.");
+		}
 		
 	}
 }
