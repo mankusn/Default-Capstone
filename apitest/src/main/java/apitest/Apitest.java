@@ -14,6 +14,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 public class Apitest{
 	public static String unixTimeToDate(long unix){
 		//http://stackoverflow.com/questions/17432735/convert-unix-time-stamp-to-date-in-java
@@ -25,6 +34,53 @@ public class Apitest{
 	}
 	
 	// -- -- -- -- -- - -- - -- -- -- -- - - - Security utils
+	
+	
+	
+
+
+
+        //convert byte to hex format
+	public static String strConv(byte[] byteData){
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < byteData.length; i++){
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+		}
+
+		return sb.toString();	
+	}
+	//http://www.java2s.com/Tutorial/Java/0490__Security/AnexampleofusingRSAtoencryptasingleasymmetrickey.htm
+	public void rsaTest(String[] args) throws Exception {
+	    KeyGenerator keyGenerator = KeyGenerator.getInstance("Blowfish");
+	    keyGenerator.init(128);
+	    Key blowfishKey = keyGenerator.generateKey();
+	
+	    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+	    keyPairGenerator.initialize(1024);
+	    KeyPair keyPair = keyPairGenerator.genKeyPair();
+	
+	    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+	    cipher.init(Cipher.ENCRYPT_MODE, keyPair.getPublic());
+	
+	    byte[] blowfishKeyBytes = blowfishKey.getEncoded();
+	    System.out.println(" part1 ");
+	    System.out.println(new String(blowfishKeyBytes));
+	    System.out.println(" in str ");
+	    System.out.println(strConv(blowfishKeyBytes));
+	    byte[] cipherText = cipher.doFinal(blowfishKeyBytes);
+	    System.out.println(" part two ");
+	    System.out.println(new String(cipherText));
+	    System.out.println(" string");
+	    System.out.println(strConv(cipherText));
+	    cipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+	
+	    byte[] decryptedKeyBytes = cipher.doFinal(cipherText);
+	    System.out.println(" decrypted bytes ");
+	    System.out.println(new String(decryptedKeyBytes));
+	    System.out.println(" string ");
+	    System.out.println(strConv(decryptedKeyBytes));
+	    SecretKey newBlowfishKey = new SecretKeySpec(decryptedKeyBytes, "Blowfish");
+	}
 	
 	
 	// https://crackstation.net/hashing-security.htm#salt
