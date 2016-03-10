@@ -149,5 +149,24 @@ public class TidalAPI {
 		System.out.println("data for 2100 is ");
 		//System.out.println(b);
 		System.out.println(isolateTideData(b));
+<<<<<<< HEAD:apitest/src/main/java/apitest/TidalAPI.java
+=======
+		
+		System.out.println("My password is... \n teamDefault482");
+		
+		String encryptedPassword = encryptPasscode("teamDefault482");
+		
+		System.out.println("checking orig password to encrypted... ");
+		
+		String plaintext = "teamDefault482";
+		
+		if(encryptPasscode(plaintext).equals( encryptedPassword)){
+			System.out.println("encrypted password hash matches plaintext hash");
+		}
+		else{
+			System.out.println("test failed.");
+		}
+		
+>>>>>>> 37f825c6b00f71f1d85a0bb15300351ee35a09ea:apitest/src/main/java/apitest/Apitest.java
 	}
 }
