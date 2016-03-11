@@ -1,9 +1,11 @@
-package apitest;
+package api;
 
 import org.json.JSONObject;
 import static org.junit.Assert.*;
 import org.json.JSONException;
 import org.junit.*;
+
+import api.WeatherAPI;
 
 public class WeatherAPITest{
 	protected long unixTime;
@@ -14,7 +16,7 @@ public class WeatherAPITest{
 	}
 	
 	@Test
-	public void pastTemperatureShouldBe91Point57() throws JSONException{
+	public void pastHighTemperatureShouldBe91Point57() throws JSONException{
 		JSONObject weather = WeatherAPI.getPastWeather(unixTime);
 		assertEquals("The high temperature on June 9th, 2015 should be",91.57,weather.getDouble("temperatureMax"),1);
 	}

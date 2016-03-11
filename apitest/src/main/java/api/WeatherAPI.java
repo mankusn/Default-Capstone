@@ -1,4 +1,4 @@
-package apitest;
+package api;
 
 /*
  * TODO: 1) Integrate with database
