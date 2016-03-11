@@ -50,7 +50,8 @@ public class WeatherAPI{
 		return weatherObj;
 	}
 	
-	public static JSONObject getPastFullDayWeather(String date) throws JSONException{
+	public static JSONObject getPastWeather(long unixStamp) throws JSONException{
+		String date = unixTimeToDate(unixStamp);
 		String request = makeAPIRequest(date);
 		JSONObject weatherObj = makeAPICall(request);
 		
@@ -81,17 +82,16 @@ public class WeatherAPI{
 		System.out.println();
 	}
 	
-	public static void lastWeeksForecast() throws JSONException{
+	public static void getLastWeeksForecast() throws JSONException{
 		long currentTime = System.currentTimeMillis();
 		for(int index = 0; index < 7; index++){
-			String requestTime = unixTimeToDate(currentTime);
-			JSONObject dailyObj = getPastFullDayWeather(requestTime);
+			JSONObject dailyObj = getPastWeather(currentTime);
 			displayWeatherData(dailyObj);
 			currentTime-=86400000; //86,400,000 milliseconds in a day
 		}
 	}
 	
-	public static void nextWeeksForecast() throws JSONException{
+	public static JSONObject getNextDaysForecast() throws JSONException{
 		String request = makeAPIRequest();
 		JSONObject weatherObj = makeAPICall(request);
 		
@@ -99,18 +99,16 @@ public class WeatherAPI{
 		//In this case, there are 8 objects inside the array, with each one representing a day
 		JSONObject dailyForecastObj = weatherObj.getJSONObject("daily");
 		JSONArray days = (JSONArray) dailyForecastObj.get("data");
-		for(int index = 0; index < 8; ++index){
-			JSONObject dayObj = (JSONObject) days.get(index);
-			displayWeatherData(dayObj);
-		}
+		JSONObject dayObj = (JSONObject) days.get(1);
+		return dayObj;
 	}
-	
+
 	public static void main(String args[]) throws JSONException{
 		//Currently retrieves the last week of temperatures
 		//Uses American units (Fahrenheit, MPH)
-		System.out.println("NEXT WEEK'S FORECAST\n--------------------");
-		nextWeeksForecast();
-		System.out.println("LAST WEEK'S WEATHER\n-------------------");
-		lastWeeksForecast();
+		System.out.println("TOMORROW'S FORECAST\n--------------------");
+		displayWeatherData(getNextDaysForecast());
+		System.out.println("YESTERDAY'S WEATHER\n-------------------");
+		displayWeatherData(getPastWeather(System.currentTimeMillis()));
 	}
 }
