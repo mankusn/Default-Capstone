@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class WeatherAPI{
+	//Helper function unixTimeToDate takes a unix timestamp
+	//and returns a date formatted to fit the forecast.io API
 	public static String unixTimeToDate(long unix){
 		//http://stackoverflow.com/questions/17432735/convert-unix-time-stamp-to-date-in-java
 		Date date = new Date(unix);
@@ -24,7 +26,10 @@ public class WeatherAPI{
 		return formattedDate;
 	}
 	
-	//Case for future weather data where no date is required
+	//makeAPIRequest has two cases, depending on whether we're
+	//requesting current/future or past weather
+	//
+	//Case for current/future weather data where no date is required
 	public static String makeAPIRequest() throws JSONException{
 		return makeAPIRequest("");
 	}
@@ -50,6 +55,11 @@ public class WeatherAPI{
 		return weatherObj;
 	}
 	
+	
+	//getPastWeather and getNextDaysForecast return a JSONObject containing
+	//weather data for a given date. Future weather returns the next seven days,
+	//so it needs to be parsed to return a single day
+	
 	public static JSONObject getPastWeather(long unixStamp) throws JSONException{
 		String date = unixTimeToDate(unixStamp);
 		String request = makeAPIRequest(date);
@@ -64,33 +74,6 @@ public class WeatherAPI{
 		return dailyObj;
 	}
 	
-	public static void displayWeatherData(JSONObject obj) throws JSONException{
-		System.out.print("Date: ");
-		System.out.println(unixTimeToDate((obj.getLong("time")*1000)));
-		System.out.print("High Temperature: ");
-		System.out.println(obj.get("temperatureMax"));
-		System.out.print("Low Temperature: ");
-		System.out.println(obj.get("temperatureMin"));
-		System.out.print("Precipitation % Chance: ");
-		System.out.println((int)((obj.getDouble("precipProbability"))*100) + "%");
-		System.out.print("Outlook: ");
-		System.out.println(obj.get("summary"));
-		System.out.print("Wind Speed: ");
-		System.out.println(obj.get("windSpeed"));
-		System.out.print("Wind Direction (0 = N, 90 = E, etc): ");
-		System.out.println(obj.get("windBearing"));		
-		System.out.println();
-	}
-	
-	public static void getLastWeeksForecast() throws JSONException{
-		long currentTime = System.currentTimeMillis();
-		for(int index = 0; index < 7; index++){
-			JSONObject dailyObj = getPastWeather(currentTime);
-			displayWeatherData(dailyObj);
-			currentTime-=86400000; //86,400,000 milliseconds in a day
-		}
-	}
-	
 	public static JSONObject getNextDaysForecast() throws JSONException{
 		String request = makeAPIRequest();
 		JSONObject weatherObj = makeAPICall(request);
@@ -103,12 +86,65 @@ public class WeatherAPI{
 		return dayObj;
 	}
 
+	
+	//getter methods for parsing the object returned by getPastWeather and
+	//getNextDaysForecast. This way is easier for the algorithm than to create
+	//a class that contains all these members
+	
+	public static String getDate(JSONObject obj) throws JSONException{
+		String fullTime = unixTimeToDate((obj.getLong("time")*1000));
+		String date = fullTime.substring(0, 10);
+		return date;
+	}
+	
+	public static int getHighTemp(JSONObject obj) throws JSONException{
+		return (int)(obj.getDouble("temperatureMax"));
+	}
+	
+	public static int getLowTemp(JSONObject obj) throws JSONException{
+		return (int)(obj.getDouble("temperatureMin"));
+	}
+	
+	public static int getPrecipProb(JSONObject obj) throws JSONException{
+		return (int)(obj.getDouble("precipProbability")*100);
+	}
+	
+	public static String getOutlook(JSONObject obj) throws JSONException{
+		return obj.getString("summary");
+	}
+	
+	public static int getWindSpeed(JSONObject obj) throws JSONException{
+		return (int)(obj.getDouble("windSpeed"));
+	}
+	
+	public static int getWindDir(JSONObject obj) throws JSONException{
+		return obj.getInt("windBearing");
+	}
+
+	public static void displayWeatherData(JSONObject obj) throws JSONException{
+		System.out.print("Date: ");
+		System.out.println(getDate(obj));
+		System.out.print("High Temperature: ");
+		System.out.println(getHighTemp(obj));
+		System.out.print("Low Temperature: ");
+		System.out.println(getLowTemp(obj));
+		System.out.print("Precipitation % Chance: ");
+		System.out.println(getPrecipProb(obj) + "%");
+		System.out.print("Outlook: ");
+		System.out.println(getOutlook(obj));
+		System.out.print("Wind Speed: ");
+		System.out.println(getWindSpeed(obj));
+		System.out.print("Wind Direction (0 = N, 90 = E, etc): ");
+		System.out.println(getWindDir(obj));		
+		System.out.println();
+	}
+	
 	public static void main(String args[]) throws JSONException{
 		//Currently retrieves the last week of temperatures
 		//Uses American units (Fahrenheit, MPH)
 		System.out.println("TOMORROW'S FORECAST\n--------------------");
 		displayWeatherData(getNextDaysForecast());
-		System.out.println("YESTERDAY'S WEATHER\n-------------------");
+		System.out.println("YESTERDAY'S WEATHER\n--------------------");
 		displayWeatherData(getPastWeather(System.currentTimeMillis()));
 	}
 }

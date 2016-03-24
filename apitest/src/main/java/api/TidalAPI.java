@@ -143,6 +143,43 @@ public class TidalAPI {
 		
 		return output;
 	}
+	
+	public static int getPrecipMM(JSONObject input) throws JSONException{
+		return input.getInt("precipMM");
+	}
+	
+	public static int getVisibility(JSONObject input) throws JSONException{
+		return input.getInt("visibility");
+	}
+	
+	public static int getSwellDir(JSONObject input) throws JSONException{
+		return input.getInt("swellDir");
+	}
+	
+	public static int getWaterTemp(JSONObject input) throws JSONException{
+		return (int)(input.getDouble("waterTempF"));
+	}
+	
+	public static double getSwellHeight(JSONObject input) throws JSONException{
+		return input.getDouble("swellHeight_m");
+	}
+	
+	public static int getWindDir(JSONObject input) throws JSONException{
+		return input.getInt("winddirDegree");
+	}
+	
+	public static int getWindSpeed(JSONObject input) throws JSONException{
+		return input.getInt("windspeedMiles");
+	}
+	
+	public static double getSwellPeriod(JSONObject input) throws JSONException{
+		return input.getDouble("swellPeriod_secs");
+	}
+	
+	public static String getCardinalWindDir(JSONObject input) throws JSONException{
+		return input.getString("winddir16Point");
+	}
+	
 	public static void main(String args[]) throws JSONException{
 		JSONArray a = getTideForecast();
 		JSONObject b = getTideDataForTime("2100", a);
