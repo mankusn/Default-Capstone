@@ -1,43 +1,31 @@
 package apitest;
 
+import java.security.InvalidKeyException;
+
 /*TODO: 1) Get water data
 		2) Integrate with database
 		3) Get boat data?
 */
 //Example program to test retrieving temperature from the forecast.io API
 
-import org.springframework.web.client.RestTemplate;
-import org.json.JSONObject;
-import org.json.JSONException;
-import org.json.JSONArray;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Apitest{
-	public static String unixTimeToDate(long unix){
-		//http://stackoverflow.com/questions/17432735/convert-unix-time-stamp-to-date-in-java
-		Date date = new Date(unix);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT-6"));
-		String formattedDate = sdf.format(date);
-		return formattedDate;
-	}
 	
 	// -- -- -- -- -- - -- - -- -- -- -- - - - Security utils
-	
-	
-	
-
 
 
         //convert byte to hex format
@@ -49,8 +37,45 @@ public class Apitest{
 
 		return sb.toString();	
 	}
+	
+	public static String encryptRSA(String input) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException{
+		KeyGenerator keyGenerator = KeyGenerator.getInstance("Blowfish");
+		//KeyGenerator.getInstance
+	    keyGenerator.init(128);
+	    Key blowfishKey = keyGenerator.generateKey();
+	
+	    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+	    keyPairGenerator.initialize(1024);
+	    KeyPair keyPair = keyPairGenerator.genKeyPair();
+	    
+	
+	    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+	    
+	    
+	    cipher.init(Cipher.ENCRYPT_MODE, keyPair.getPublic());
+	    
+	    System.out.println("public key");
+	    System.out.println(keyPair.getPublic());
+	    System.out.println("private key");
+	    System.out.println(keyPair.getPrivate());
+	
+	    byte[] blowfishKeyBytes = blowfishKey.getEncoded();
+	    //System.out.println(" part1 ");
+	    //System.out.println(new String(blowfishKeyBytes));
+	    
+	    return new String(blowfishKeyBytes);
+	    
+	}
+	
+	public String decryptRSA(String input){
+		
+		
+		return "";
+	}
+	
 	//http://www.java2s.com/Tutorial/Java/0490__Security/AnexampleofusingRSAtoencryptasingleasymmetrickey.htm
-	public void rsaTest(String[] args) throws Exception {
+	public static void rsaTest(String args) throws Exception {
+		
 	    KeyGenerator keyGenerator = KeyGenerator.getInstance("Blowfish");
 	    keyGenerator.init(128);
 	    Key blowfishKey = keyGenerator.generateKey();
@@ -58,20 +83,31 @@ public class Apitest{
 	    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
 	    keyPairGenerator.initialize(1024);
 	    KeyPair keyPair = keyPairGenerator.genKeyPair();
+	    
 	
 	    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	    cipher.init(Cipher.ENCRYPT_MODE, keyPair.getPublic());
+	    
+	    System.out.println("public key");
+	    System.out.println(keyPair.getPublic());
+	    System.out.println("private key");
+	    System.out.println(keyPair.getPrivate());
 	
 	    byte[] blowfishKeyBytes = blowfishKey.getEncoded();
 	    System.out.println(" part1 ");
 	    System.out.println(new String(blowfishKeyBytes));
 	    System.out.println(" in str ");
 	    System.out.println(strConv(blowfishKeyBytes));
+	    
+	    // convert byte array into string and store into DB
 	    byte[] cipherText = cipher.doFinal(blowfishKeyBytes);
+	    
 	    System.out.println(" part two ");
 	    System.out.println(new String(cipherText));
 	    System.out.println(" string");
 	    System.out.println(strConv(cipherText));
+	    
+	    
 	    cipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
 	
 	    byte[] decryptedKeyBytes = cipher.doFinal(cipherText);
@@ -82,10 +118,28 @@ public class Apitest{
 	    SecretKey newBlowfishKey = new SecretKeySpec(decryptedKeyBytes, "Blowfish");
 	}
 	
+	public static String complHash(String inp1, String inp2) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException{
+		
+		//System.out.println("input 1:: " + inp1);
+		//System.out.println("input 2:: " + inp2);
+		
+		String encoding = encryptRSA(inp1);
+		//System.out.println("salt :: " + encoding);
+		
+		String sHb = inp2 + encoding;
+		
+		String resHash = hashPasscode(sHb);
+		
+		//System.out.println("result:: " + resHash);
+		
+		
+		return resHash;
+	}
+	
 	
 	// https://crackstation.net/hashing-security.htm#salt
 	
-	public static String encryptPasscode(String input) throws NoSuchAlgorithmException{
+	public static String hashPasscode(String input) throws NoSuchAlgorithmException{
 		
 		// source: http://www.mkyong.com/java/java-sha-hashing-example/
 		MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -93,245 +147,38 @@ public class Apitest{
 		
 		byte byteData[] = md.digest();
 		
+		String a = new String(byteData);
+		//System.out.println(" actual hash? :: " + a);
+		
 		//convert byte to hex format
 		StringBuffer sb = new StringBuffer();
 		for(int i = 0; i < byteData.length; i++){
 			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
 		}
 		
-		System.out.println("Hex format of encrypted password: " + sb.toString());
+		//System.out.println("Hex format of encrypted password: " + sb.toString());
 		
 		return sb.toString();
 	}
 	
 	
+	public static String HMAC(String inp1, String inp2) throws NoSuchAlgorithmException, InvalidKeyException{
+		Mac sha512_HMAC = Mac.getInstance("HmacSHA512");
+		SecretKeySpec secret_key = new SecretKeySpec(inp1.getBytes(), "HmacSHA512");
+		sha512_HMAC.init(secret_key);
+		Encoder asdf = Base64.getEncoder();
+		String res = asdf.encodeToString(sha512_HMAC.doFinal(inp2.getBytes()));
+		//String hash = Base64.encodeBase64String(sha512_HMAC.doFinal(inp2.getBytes()));
+		
+		
+		return res;
+	}
+	
 	// -- -- -- -- -- - - -- -- -- -- - - - -- End security utils
 
-	// --- --- --- --- --- --- --- --- Tide API calls
-	
-	public static String makeTideAPIRequest() throws JSONException{
-		
-		String APIKey = "c1bceffff953053aa354659b63a67";
-		//String latitude = "30.6014";
-		//String longitude = "-96.3144"; //College Station, TX
-		
-		// lesvos coords
-		String latitude = "39.3012";
-		String longitude = "25.9888";
-		
-		String request = "http://api.worldweatheronline.com/free/v2/marine.ashx?key=" + APIKey + "&format=JSON&q=" + latitude + "," + longitude;
-		return request;
-	}
-	
-	public static JSONArray getTideForecast() throws JSONException{
-		String request = makeTideAPIRequest();
-		//System.out.println("req:: " + request);
-		RestTemplate restTemplate = new RestTemplate();
-		String tidePredict = restTemplate.getForObject(request, String.class);
-		JSONObject tideObj = new JSONObject(tidePredict);
-		//System.out.println(tideObj);
-		//System.out.println(tideObj.get("data"));
-		//System.out.println(tideObj.get("query"));
-		
-		JSONObject data = new JSONObject(tideObj.getString("data"));
-		//System.out.println(data);
-		//System.out.println(data.getJSONArray("weather"));
-		JSONArray dat = (JSONArray) data.getJSONArray("weather");
-		JSONObject temp = dat.getJSONObject(0);
-		JSONArray tempre = temp.getJSONArray("hourly");
-		//System.out.println(dat);
-		//System.out.println(temp);
-		//System.out.println(tempre);
-		/*Vector<String> a = new Vector<String>();
-		for(int i = 0; i < dat.length(); i++){
-			a.addElement(temp.getString("swellDir"));
-			System.out.println("count " + i);
-			System.out.println(temp.getString("swellDir"));
-		}
-		
-		
-		for(int i = 0; i < a.size(); i++){
-			//System.out.println(a.elementAt(i));
-		} */
-		
-		
-		
-		//JSONArray arr = (JSONArray) data.getJSONArray("request");
-		//System.out.println(arr.get(0));
-		//System.out.println(data.get("request"));
-		//JSONArray arr = (JSONArray) tideObj.get("data");
-		//JSONObject newobj = (JSONObject) arr.get(0);
-		
-		// KEYS
-		// waterTemp_F
-		// visibility
-		// swellDir
-		// swellHeight_m
-		// winddir16Point
-		// swellPeriod_secs
-		//tideObj.getString("waterTemp_F");
-		//JSONObject waterTemp = new JSONObject(tideObj.get("waterTemp_F"));
-		
-		System.out.println(" ending test ");
-		
-		System.out.println(" returning data for times (24 hr format):");
-		for(int i = 0; i < tempre.length(); i++){
-			String time = tempre.getJSONObject(i).getString("time");
-			System.out.println(time);
-		}
-		
-		return tempre;
-	}
-	
-	public static JSONObject getTideDataForTime(String time, JSONArray data) throws JSONException{
-		if(time == "0"){
-			JSONObject ret = data.getJSONObject(0);
-			return ret;
-		}
-		else if(time == "300"){
-			JSONObject ret = data.getJSONObject(1);
-			return ret;
-		}
-		else if(time == "600"){
-			JSONObject ret = data.getJSONObject(2);
-			return ret;
-		}
-		else if(time == "900"){
-			JSONObject ret = data.getJSONObject(3);
-			return ret;
-		}
-		else if(time == "1200"){
-			JSONObject ret = data.getJSONObject(4);
-			return ret;
-		}
-		else if(time == "1500"){
-			JSONObject ret = data.getJSONObject(5);
-			return ret;
-		}
-		else if(time == "1800"){
-			JSONObject ret = data.getJSONObject(6);
-			return ret;
-		}
-		else if(time == "2100"){
-			JSONObject ret = data.getJSONObject(7);
-			return ret;
-		}
-		
-		return new JSONObject();
-	}
-	
-	public static JSONObject isolateTideData(JSONObject input) throws JSONException{
-		
-		JSONObject output = new JSONObject();
-		// DESIRED KEYS
-		// precipMM
-		// visibility
-		// swellDir
-		// waterTemp_F
-		// swellHeight_m
-		// winddirDegree
-		// windspeedMiles
-		// swellPeriod_secs
-		// winddir16Point
-		
-		output.append("precipMM", input.getString("precipMM"));
-		output.append("visibility", input.getString("visibility"));
-		output.append("swellDir", input.getString("swellDir"));
-		output.append("waterTemp_F", input.getString("waterTemp_F"));
-		output.append("swellHeight_m", input.getString("swellHeight_m"));
-		output.append("winddirDegree", input.getString("winddirDegree"));
-		output.append("windspeedMiles", input.getString("windspeedMiles"));
-		output.append("swellPeriod_secs", input.getString("swellPeriod_secs"));
-		output.append("winddir16Point", input.getString("winddir16Point"));
-		
-		return output;
-	}
 	
 	
-	// --- --- --- --- --- --- --- --- End Tide API calls
-	
-	//Case for future weather data where no date is required
-	public static String makeAPIRequest(String date) throws JSONException{
-		return makeAPIRequest("");
-	}
-
-	//Case for past weather data where a date is required
-	public static String makeAPIRequest(String date){
-		//Creates the API request string
-		String APIKey = "c62d91cb9c000638716e55cbc478330f"; //Replace this if we run out of requests on an account
-		String latitude = "30.6014";
-		String longitude = "-96.3144"; //College Station, TX
-		String request = "https://api.forecast.io/forecast/" + APIKey + "/" + latitude + "," +
-						longitude;
-		if(!date.equals(""))
-			request+= "," + date;
-		return request;
-	}
-	
-	public static JSONObject makeAPICall(String request) throws JSONException{
-		//I used the "Consuming a RESTful Web Service" found here: https://spring.io/guides/gs/consuming-rest/
-		RestTemplate restTemplate = new RestTemplate();
-		String daysWeather = restTemplate.getForObject(request,String.class);
-		JSONObject weatherObj = new JSONObject(daysWeather);
-		return weatherObj;
-	}
-	
-	public static JSONObject getPastFullDayWeather(String date) throws JSONException{
-		String request = makeAPIRequest(date);
-		JSONObject weatherObj = makeAPICall(request);
-		
-		//We don't need the "current" or hourly report, just data for the whole day
-		//This data is presented as a JSONObject that contains a JSONArray with one element
-		//With that element being the JSONObject containing the daily report
-		JSONObject fakeDailyObj = weatherObj.getJSONObject("daily");
-		JSONArray arr = (JSONArray) fakeDailyObj.get("data");
-		JSONObject dailyObj = (JSONObject) arr.get(0);
-		return dailyObj;
-	}
-	
-	public static void displayWeatherData(JSONObject obj) throws JSONException{
-		System.out.print("Date: ");
-		System.out.println(unixTimeToDate((obj.getLong("time")*1000)));
-		System.out.print("High Temperature: ");
-		System.out.println(obj.get("temperatureMax"));
-		System.out.print("Low Temperature: ");
-		System.out.println(obj.get("temperatureMin"));
-		System.out.print("Precipitation % Chance: ");
-		System.out.println((int)((obj.getDouble("precipProbability"))*100) + "%");
-		System.out.print("Outlook: ");
-		System.out.println(obj.get("summary"));
-		System.out.print("Wind Speed: ");
-		System.out.println(obj.get("windSpeed"));
-		System.out.print("Wind Direction (0 = N, 90 = E, etc): ");
-		System.out.println(obj.get("windBearing"));		
-		System.out.println();
-	}
-	
-	public static void lastWeeksForecast() throws JSONException{
-		long currentTime = System.currentTimeMillis();
-		for(int index = 0; index < 7; index++){
-			String requestTime = unixTimeToDate(currentTime);
-			JSONObject dailyObj = getPastFullDayWeather(requestTime);
-			displayWeatherData(dailyObj);
-			currentTime-=86400000; //86,400,000 milliseconds in a day
-		}
-	}
-	
-	public static void nextWeeksForecast() throws JSONException{
-		String request = makeAPIRequest();
-		JSONObject weatherObj = makeAPICall(request);
-		
-		//Like the past data, each day's data is a JSONObject inside a JSONArray inside a JSONObject
-		//In this case, there are 8 objects inside the array, with each one representing a day
-		JSONObject dailyForecastObj = weatherObj.getJSONObject("daily");
-		JSONArray days = (JSONArray) dailyForecastObj.get("data");
-		for(int index = 0; index < 8; ++index){
-			JSONObject dayObj = (JSONObject) days.get(index);
-			displayWeatherData(dayObj);
-		}
-	}
-	
-	public static void main(String args[]) throws JSONException{
+	public static void main(String args[]) throws Exception{
 		//Currently retrieves the last week of temperatures
 		//Uses American units (Fahrenheit, MPH)
 		//System.out.println("NEXT WEEK'S FORECAST\n--------------------");
@@ -339,26 +186,88 @@ public class Apitest{
 		//System.out.println("LAST WEEK'S WEATHER\n-------------------");
 		//lastWeeksForecast();
 		
-		JSONArray a = getTideForecast();
-		JSONObject b = getTideDataForTime("2100", a);
-		System.out.println("data for 2100 is ");
-		//System.out.println(b);
-		System.out.println(isolateTideData(b));
 		
+		//System.out.println(b);
+		
+		
+		// username = salt  for hash
+		// password = hashed and stored in DB
+		
+		String test = "AuthUser";
+		String pass = "teamDefault482";
+		
+		String enc = HMAC(test, pass);
+		String enc2 = HMAC(test, "TeamDefault482");
+		String enc3 = HMAC("authUser", pass);
+		String enc4 = HMAC("AuthUser", "teamDefault482");
+		
+		System.out.println(enc + '\n' + enc2 + '\n' + enc3 + '\n' + enc4);
+		
+		if(enc.equals(enc2)){
+			System.out.println(" test 1 failed. invalid authentication.  ");
+			
+		}
+		else System.out.println(" test 1 passed. failed to authenticate. ");
+		
+		if(enc.equals(enc3)){
+			System.out.println(" test 2 failed. invalid authentication. ");
+		}
+		else System.out.println(" test 2 passed. failed to authenticate. ");
+		
+		if(enc.equals(enc4)){
+			System.out.println(" test 3 passed. authentication successful. ");
+		}
+		else System.out.println(" test 3 failed. failed to authenticate. ");
+		
+		/*String res = complHash(test, pass);
+		
+		System.out.println("stored hash:: " + res);
+		
+		String testtwo = "authUser";
+		String res1 = complHash(testtwo, pass);
+		System.out.println("              " + res1);
+		
+		if(! res.equals(res1)){
+			System.out.println("hashes do not equal. test passed ");
+		}
+		else System.out.println("test failed 1 ");
+		
+		String passtwo = "TeamDefault482";
+		String res2 = complHash(test, passtwo);
+		System.out.println("              " + res2);
+		
+		if(! res.equals(res2)){
+			System.out.println("hashes do not equal. test passed. ");
+		}
+		else System.out.println("test failed 2 ");
+		
+		String res3 = complHash(test, pass);
+		
+		System.out.println(res);
+		System.out.println(res3);
+		
+		if(! res.equals(res3)){
+			System.out.println("hashes do not equal. test failed. ");
+		}
+		else System.out.println("test passed 3 ");
+		/*
 		System.out.println("My password is... \n teamDefault482");
 		
-		String encryptedPassword = encryptPasscode("teamDefault482");
+		String encryptedPassword = hashPasscode("teamDefault482");
 		
 		System.out.println("checking orig password to encrypted... ");
 		
 		String plaintext = "teamDefault482";
 		
-		if(encryptPasscode(plaintext).equals( encryptedPassword)){
+		if(hashPasscode(plaintext).equals( encryptedPassword)){
 			System.out.println("encrypted password hash matches plaintext hash");
 		}
 		else{
 			System.out.println("test failed.");
 		}
 		
+		
+		rsaTest("hello");
+		*/
 	}
 }
