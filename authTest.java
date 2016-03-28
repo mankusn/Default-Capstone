@@ -73,6 +73,8 @@ public class Apitest{
 		return "";
 	}
 	
+	// RSA encryption tool
+	// Not currently used - able to be used in the future
 	//http://www.java2s.com/Tutorial/Java/0490__Security/AnexampleofusingRSAtoencryptasingleasymmetrickey.htm
 	public static void rsaTest(String args) throws Exception {
 		
@@ -118,6 +120,9 @@ public class Apitest{
 	    SecretKey newBlowfishKey = new SecretKeySpec(decryptedKeyBytes, "Blowfish");
 	}
 	
+	// Complex hash - uses SHA-512 hash combined with RSA encryption. 
+	// User attempted HMAC authentication - incomplete and have to account for RSA modulo
+	// Dont use at the moment - use library CMAC function function
 	public static String complHash(String inp1, String inp2) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException{
 		
 		//System.out.println("input 1:: " + inp1);
@@ -136,9 +141,8 @@ public class Apitest{
 		return resHash;
 	}
 	
-	
+	// SHA-512 hashing function. Hashes input for storage. Does not salt hash in this function. 
 	// https://crackstation.net/hashing-security.htm#salt
-	
 	public static String hashPasscode(String input) throws NoSuchAlgorithmException{
 		
 		// source: http://www.mkyong.com/java/java-sha-hashing-example/
@@ -161,7 +165,10 @@ public class Apitest{
 		return sb.toString();
 	}
 	
-	
+	// Using this function for username/password authentication
+	// use this function to create hash to store into DB, then use this function each time a user attempts to log in
+	// this function will use username and password to create hash using SHA-512, and afterwards
+	// 	will access DB and compare input to stored value.
 	public static String HMAC(String inp1, String inp2) throws NoSuchAlgorithmException, InvalidKeyException{
 		Mac sha512_HMAC = Mac.getInstance("HmacSHA512");
 		SecretKeySpec secret_key = new SecretKeySpec(inp1.getBytes(), "HmacSHA512");
@@ -193,6 +200,8 @@ public class Apitest{
 		// username = salt  for hash
 		// password = hashed and stored in DB
 		
+		// HMAC tests -- -- -- -- --
+		
 		String test = "AuthUser";
 		String pass = "teamDefault482";
 		
@@ -218,6 +227,8 @@ public class Apitest{
 			System.out.println(" test 3 passed. authentication successful. ");
 		}
 		else System.out.println(" test 3 failed. failed to authenticate. ");
+		
+		// end HMAC tests -- -- -- -- --
 		
 		/*String res = complHash(test, pass);
 		
