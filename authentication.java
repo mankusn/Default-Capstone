@@ -23,7 +23,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Apitest{
+public class authentication{
 	
 	// -- -- -- -- -- - -- - -- -- -- -- - - - Security utils
 
