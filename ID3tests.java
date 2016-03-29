@@ -58,9 +58,24 @@ public class ID3tests{
   
   @test
   public void hasCatTest(){
-    // need internal attributes 
+    assertEquals(True, hasCategory(rawData3, dataSet, "WindSpeed"));
+  }
+  
+  @test
+  public void hasCatNegTest(){
+  	assertEquals(False, hasCategory(rawData3, dataSet, "coolCars"));
+  }
+  
+  @test
+  public void calculateInformationGainTest(){
+  	double a = calculateInformationGain(dataSet, attributeOld, attributeTarget);
+  	
   }
 	
+  @test
+  public void calculateEntropyTest(){
+  	//dunno
+  }
 	
 	
 }
