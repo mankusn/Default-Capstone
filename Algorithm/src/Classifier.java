@@ -2,10 +2,10 @@
 public class Classifier {
 	
 	private String name;
-	private int dataPoint;
+	private String dataPoint;
 	private String category;
 	
-	public Classifier(String n, int data){
+	public Classifier(String n, String data){
 		name = n;
 		dataPoint = data;
 		
@@ -29,14 +29,14 @@ public class Classifier {
 		this.name = name;
 	}
 
-	public int getDataPoint() {
+	
+
+	public String getDataPoint() {
 		return dataPoint;
 	}
-
-	public void setDataPoint(int dataPoint) {
+	public void setDataPoint(String dataPoint) {
 		this.dataPoint = dataPoint;
 	}
-
 	public String getCategory() {
 		return category;
 	}
