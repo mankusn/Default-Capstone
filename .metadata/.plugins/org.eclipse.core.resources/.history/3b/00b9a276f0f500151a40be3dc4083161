@@ -1,0 +1,114 @@
+
+public class Classifier {
+	
+	private String name;
+	private int dataPoint;
+	private String category;
+	private int classifierCount;
+	private int maxValue;
+	private int minValue;
+	
+	public Classifier(String n, int data){
+		name = n;
+		dataPoint = data;
+		
+	}
+	//Creates classifications for dataPoint 
+	public void classifyAttribute(){
+		if (this.name == "highTemp") {
+			this.dataPoint = classifyThreeCategories();
+		} else if (this.name == "lowTemp") {
+			this.dataPoint = classifyThreeCategories();
+		} else if (this.name == "precipProb") {
+			this.dataPoint = classifyThreeCategories();
+		} else if (this.name == "outlook") {
+			//This will take more work come back to it
+		} else if (this.name == "windSpeed") {
+			this.dataPoint = classifyThreeCategories();
+		} else if (this.name == "windDir") {
+			//This will take more work come back to it
+		} else if (this.name == "precipMM") {
+			
+		} else if (this.name == "visibility") {
+			
+		} else if (this.name == "swellDir") {
+			
+		} else if (this.name == "waterTemp_F") {
+			
+		} else if (this.name == "swellHeight_m") {
+			
+		} else if (this.name == "windDirDegree") {
+			
+		} else if (this.name == "windSpeedMiles") {
+			
+		} else if (this.name == "swellPeriod_secs") {
+			
+		} else if (this.name == "windDir16Point") {
+			
+		} else if (this.name == "boatCount") {
+			
+		} else {
+			System.out.println("ERROR: NAME NOT FOUND IN DATABASE OF CLASSIFIERS");
+		}
+	}
+	
+	private int classifyThreeCategories() {
+		int count = 0;
+		this.setClassifierCount(3);
+		int currentValue = this.minValue;
+		while (currentValue <= this.dataPoint || currentValue != this.maxValue) {
+			currentValue += (maxValue - minValue)/classifierCount;
+			++count;
+		}
+		return count;
+	}
+	//possibly unnecessary
+	public void createRange(){
+		
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getDataPoint() {
+		return dataPoint;
+	}
+
+	public void setDataPoint(int dataPoint) {
+		this.dataPoint = dataPoint;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	public int getClassifierCount() {
+		return classifierCount;
+	}
+
+	public void setClassifierCount(int classifierCount) {
+		this.classifierCount = classifierCount;
+	}
+	public int getMaxValue() {
+		return maxValue;
+	}
+	public void setMaxValue(int maxValue) {
+		this.maxValue = maxValue;
+	}
+	public int getMinValue() {
+		return minValue;
+	}
+	public void setMinValue(int minValue) {
+		this.minValue = minValue;
+	}
+
+}
