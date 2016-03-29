@@ -126,9 +126,7 @@ public class Classifier {
 		return dataValue;
 	}
 	
-	//READ THIS------------------------------------------------
-	//FIX THE THIS.DATAPOINT ISSUE SINCE WE CHANGED TO STRINGS
-	//READ THIS------------------------------------------------
+
 	
 	//This function is for any classification that goes into 3 categories, low, medium
 	//and high where low = 1, medium = 2, and high = 3. Must be double value input
