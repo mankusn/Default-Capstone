@@ -21,6 +21,8 @@ public class InfoRow {
 		
 		
 	}
+	
+	
 	//Getters & Setters
 	
 	public HashMap<String,Classifier>getInfoRow(){
@@ -28,13 +30,11 @@ public class InfoRow {
 	}
 
 	//Classify every attribute
-	public void classifyRow(){
+	public void classifyRow(HashMap<String,Attribute> attributes){
 		
-		for(String key:infoRow.keySet()){
-			
-			infoRow.get(key).classifyAttribute();
+		for(String key:attributes.keySet()){
+			this.infoRow.get(key).classifyAttribute(attributes.get(key).getMin(),attributes.get(key).getMax());
 		}
-		
 	}
 	
 	

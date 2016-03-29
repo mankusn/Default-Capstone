@@ -103,6 +103,32 @@ public class ID3 {
 		return entropy;
 	}
 	
+	public static void setRange(Vector<InfoRow> dataSet,HashMap<String,Attribute> attributes){
+		
+		double max = 0.0;
+		double min = Double.MAX_VALUE;
+		double temp;
+		for(String key:attributes.keySet()){
+			if(key =="outlook"||key=="windDir16Point")
+				continue;
+			for(InfoRow row:dataSet){
+				temp = Double.parseDouble(row.getInfoRow().get(key).getPreClassifyData());
+				if(temp> max)
+					max = temp;
+				if(temp<min)
+					min = temp;
+			}
+			attributes.get(key).setMin(min);
+			attributes.get(key).setMax(max);
+		}
+	}
+	
+	public static void classifyDataSet(Vector<InfoRow> dataSet, HashMap<String, Attribute> attributes){
+		for(InfoRow row:dataSet){
+			row.classifyRow(attributes);
+		}
+	}
+	
 	public static void main(String[] args){
 		
 		Vector<InfoRow> dataSet = new Vector<InfoRow> ();

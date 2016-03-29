@@ -16,7 +16,7 @@ public class Classifier {
 		
 	}
 	//Creates classifications for dataPoint 
-	public void classifyAttribute(){
+	public void classifyAttribute(double min, double max){
 		if (this.name == "highTemp") {
 			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "lowTemp") {
@@ -181,7 +181,7 @@ public class Classifier {
 	}
 	
 	//IMPORTANT
-	public void createRange(){
+	public void createRange(Attribute attribute){
 		//DEFINITELY NECESSARY BUT MOST LIKELY MUST GO IN THE MAIN CLASS
 	}
 
