@@ -3,28 +3,29 @@ import java.util.Vector;
 
 public class Attribute {
 	
-	private int entropy;
-	private int infoGain;
+	private double entropy;
+	private double infoGain;
 	private String name;
 	private Vector<Attribute> children;
 	
-	public Attribute(){
-		
+	public Attribute(String n){
+		name = n;
 	}
 
-	public int getEntropy() {
+	public double getEntropy() {
+		
 		return entropy;
 	}
 
-	public void setEntropy(int entropy) {
+	public void setEntropy(double entropy) {
 		this.entropy = entropy;
 	}
 
-	public int getInfoGain() {
+	public double getInfoGain() {
 		return infoGain;
 	}
 
-	public void setInfoGain(int infoGain) {
+	public void setInfoGain(double infoGain) {
 		this.infoGain = infoGain;
 	}
 
