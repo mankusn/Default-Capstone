@@ -13,7 +13,7 @@ public class WeatherAndTidal {
 	private int precipProb; 
 	private String outlook;
 	private int windSpeed; 
-	private int precipMM;
+	private double precipMM;
 	private int visibility; 
 	private int swellDir; 
 	private int waterTemp; 
@@ -74,10 +74,10 @@ public class WeatherAndTidal {
 	public void setWindSpeed(int windSpeed) {
 		this.windSpeed = windSpeed;
 	}
-	public int getPrecipMM() {
+	public double getPrecipMM() {
 		return precipMM;
 	}
-	public void setPrecipMM(int precipMM) {
+	public void setPrecipMM(double precipMM) {
 		this.precipMM = precipMM;
 	}
 	public int getVisibility() {

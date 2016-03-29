@@ -144,39 +144,55 @@ public class TidalAPI {
 		return output;
 	}
 	
-	public static int getPrecipMM(JSONObject input) throws JSONException{
-		return input.getInt("precipMM");
+	public static double getPrecipMM(JSONObject input) throws JSONException{
+		String precipmm = input.getString("precipMM");
+		precipmm = precipmm.replaceAll("[^\\d.]", "");
+		return Double.parseDouble(precipmm);
 	}
 	
 	public static int getVisibility(JSONObject input) throws JSONException{
-		return input.getInt("visibility");
+		String vis = input.getString("visibility");
+		vis = vis.replaceAll("[^\\d.]", "");
+		return Integer.parseInt(vis);
 	}
 	
 	public static int getSwellDir(JSONObject input) throws JSONException{
-		return input.getInt("swellDir");
+		String dir = input.getString("swellDir");
+		dir = dir.replaceAll("[^\\d.]", "");
+		return Integer.parseInt(dir);
 	}
 	
 	public static int getWaterTemp(JSONObject input) throws JSONException{
-		return (int)(input.getDouble("waterTempF"));
+		String temp = input.getString("waterTemp_F");
+		temp = temp.replaceAll("[^\\d.]", "");
+		return Integer.parseInt(temp);
 	}
 	
 	public static double getSwellHeight(JSONObject input) throws JSONException{
-		return input.getDouble("swellHeight_m");
+		String height = input.getString("swellHeight_m");
+		height = height.replaceAll("[^\\d.]", "");
+		return Double.parseDouble(height);
 	}
 	
 	public static int getWindDir(JSONObject input) throws JSONException{
-		return input.getInt("winddirDegree");
+		return Integer.parseInt(input.getString("winddirDegree"));
 	}
 	
 	public static int getWindSpeed(JSONObject input) throws JSONException{
-		return input.getInt("windspeedMiles");
+		String speed = input.getString("windspeedMiles");
+		speed = speed.replaceAll("[^\\d.]", "");
+		return Integer.parseInt(speed);
 	}
 	
 	public static double getSwellPeriod(JSONObject input) throws JSONException{
-		return input.getDouble("swellPeriod_secs");
+		String per = input.getString("swellPeriod_secs");
+		per = per.replaceAll("[^\\d.]", "");
+		return Double.parseDouble(per);
 	}
 	
 	public static String getCardinalWindDir(JSONObject input) throws JSONException{
+		String dir = input.getString("winddir16Point");
+		dir = dir.replaceAll("[^\\d.]", "");
 		return input.getString("winddir16Point");
 	}
 	
