@@ -195,10 +195,10 @@ public class Classifier {
 
 	
 
-	public String getDataPoint() {
+	public int getDataPoint() {
 		return dataPoint;
 	}
-	public void setDataPoint(String dataPoint) {
+	public void setDataPoint(int dataPoint) {
 		this.dataPoint = dataPoint;
 	}
 	public String getCategory() {
