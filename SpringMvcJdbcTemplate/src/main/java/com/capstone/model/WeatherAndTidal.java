@@ -3,26 +3,46 @@ package com.capstone.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.capstone.scraping.TidalAPI;
+import com.capstone.scraping.WeatherAPI;
+
 public class WeatherAndTidal {
 
 	private int highTemp; 
 	private int lowTemp; 
 	private int precipProb; 
 	private String outlook;
-	private int windSpeedMiles;
-	private int windSpeed;
-	private int WindDirDegree; 
+	private int windSpeed; 
 	private int precipMM;
 	private int visibility; 
-	private String swellDir; 
+	private int swellDir; 
 	private int waterTemp; 
 	private double swellHeight; 
 	private double swellPeriod; 
 	private String date; 
 	private String windDir16Point;
 	private int boatCount; 
-	private String windDir;
+	private int windDir;
 	
+	public WeatherAndTidal() throws JSONException{
+		JSONObject weather = WeatherAPI.getNextDaysForecast();
+		date = WeatherAPI.getDate(weather);
+		highTemp = WeatherAPI.getHighTemp(weather);
+		lowTemp = WeatherAPI.getLowTemp(weather);
+		precipProb = WeatherAPI.getPrecipProb(weather);
+		outlook = WeatherAPI.getOutlook(weather);
+		windDir = WeatherAPI.getWindSpeed(weather);
+		
+		JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
+		precipMM = TidalAPI.getPrecipMM(tidal);
+		visibility = TidalAPI.getVisibility(tidal);
+		swellDir = TidalAPI.getSwellDir(tidal);
+		waterTemp = TidalAPI.getWaterTemp(tidal);
+		swellHeight = TidalAPI.getSwellHeight(tidal);
+		swellPeriod = TidalAPI.getSwellPeriod(tidal);
+		windDir16Point = TidalAPI.getCardinalWindDir(tidal);
+		windSpeed = TidalAPI.getWindSpeed(tidal);
+	}
 	
 	public int getHighTemp() {
 		return highTemp;
@@ -48,23 +68,11 @@ public class WeatherAndTidal {
 	public void setOutlook(String outlook) {
 		this.outlook = outlook;
 	}
-	public int getWindSpeedMiles() {
-		return windSpeedMiles;
-	}
-	public void setWindSpeedMiles(int windSpeedMiles) {
-		this.windSpeedMiles = windSpeedMiles;
-	}
 	public int getWindSpeed() {
 		return windSpeed;
 	}
 	public void setWindSpeed(int windSpeed) {
 		this.windSpeed = windSpeed;
-	}
-	public int getWindDirDegree() {
-		return WindDirDegree;
-	}
-	public void setWindDirDegree(int windDirDegree) {
-		WindDirDegree = windDirDegree;
 	}
 	public int getPrecipMM() {
 		return precipMM;
@@ -78,10 +86,10 @@ public class WeatherAndTidal {
 	public void setVisibility(int visibility) {
 		this.visibility = visibility;
 	}
-	public String getSwellDir() {
+	public int getSwellDir() {
 		return swellDir;
 	}
-	public void setSwellDir(String swellDir) {
+	public void setSwellDir(int swellDir) {
 		this.swellDir = swellDir;
 	}
 	public int getWaterTemp() {
@@ -120,10 +128,10 @@ public class WeatherAndTidal {
 	public void setBoatCount(int boatCount) {
 		this.boatCount = boatCount;
 	}
-	public String getWindDir() {
+	public int getWindDir() {
 		return windDir;
 	}
-	public void setWindDir(String windDir) {
+	public void setWindDir(int windDir) {
 		this.windDir = windDir;
 	} 
 	
