@@ -7,6 +7,8 @@ public class Classifier {
 	private String preClassifyData;
 	private String category;
 	private int classifierCount;
+	private int maxValue;
+	private int minValue;
 	
 	public Classifier(String n, String data){
 		name = n;
@@ -16,41 +18,41 @@ public class Classifier {
 	//Creates classifications for dataPoint 
 	public void classifyAttribute(double min, double max){
 		if (this.name == "highTemp") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "lowTemp") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "precipProb") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "outlook") {
 			//clear-day = 1, clear-night = 2, rain = 3, snow = 4, sleet = 5, 
 			//wind = 6, fog = 7, cloudy = 8, partly-cloudy-day = 9, partly-cloudy-night = 10
 			this.dataPoint = classifyOutlook();
 		} else if (this.name == "windSpeed") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "windDir") {
 			this.dataPoint = classifyFourCategories();
 		} else if (this.name == "precipMM") {
-			this.dataPoint = classifyThreeCategoriesDouble(min, max);
+			this.dataPoint = classifyThreeCategoriesDouble();
 		} else if (this.name == "visibility") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "swellDir") {
 			this.dataPoint = classifyFourCategories();
 		} else if (this.name == "waterTemp_F") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "swellHeight_m") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "windDirDegree") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "windSpeedMiles") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "swellPeriod_secs") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else if (this.name == "windDir16Point") {
 			//N, NNE, NE, ENE, E, ESE, SE,
 			//SSE, S, SSW, SW, WSW, W, WNW, NW, NNW
 			this.dataPoint = classifyCardinalDirection();
 		} else if (this.name == "boatCount") {
-			this.dataPoint = classifyThreeCategories(min, max);
+			this.dataPoint = classifyThreeCategories();
 		} else {
 			System.out.println("ERROR: NAME NOT FOUND IN DATABASE OF CLASSIFIERS");
 		}
@@ -132,12 +134,12 @@ public class Classifier {
 	
 	//This function is for any classification that goes into 3 categories, low, medium
 	//and high where low = 1, medium = 2, and high = 3. Must be double value input
-	private int classifyThreeCategoriesDouble(double minValue, double maxValue) {
+	private int classifyThreeCategoriesDouble() {
 		int count = 0;
 		double dataConversion = Double.parseDouble(this.preClassifyData);
 		this.setClassifierCount(3);
-		double currentValue = minValue;
-		while (currentValue <= dataConversion || currentValue != maxValue) {
+		double currentValue = this.minValue;
+		while (currentValue <= dataConversion || currentValue != this.maxValue) {
 			currentValue += (maxValue - minValue)/classifierCount;
 			++count;
 		}
@@ -146,13 +148,13 @@ public class Classifier {
 	
 	//This function is for any classification that goes into 3 categories, low, medium
 	//and high where low = 1, medium = 2, and high = 3. Must be integer value input
-	private int classifyThreeCategories(double minValue, double maxValue) {
+	private int classifyThreeCategories() {
 		int count = 0;
 		int dataConversion = Integer.parseInt(this.preClassifyData);
 		this.setClassifierCount(3);
-		int currentValue = (int) minValue;
-		while (currentValue <= dataConversion || currentValue != (int)maxValue) {
-			currentValue += ((int)maxValue - (int)minValue)/classifierCount;
+		int currentValue = this.minValue;
+		while (currentValue <= dataConversion || currentValue != this.maxValue) {
+			currentValue += (maxValue - minValue)/classifierCount;
 			++count;
 		}
 		return count;
@@ -213,6 +215,18 @@ public class Classifier {
 
 	public void setClassifierCount(int classifierCount) {
 		this.classifierCount = classifierCount;
+	}
+	public int getMaxValue() {
+		return maxValue;
+	}
+	public void setMaxValue(int maxValue) {
+		this.maxValue = maxValue;
+	}
+	public int getMinValue() {
+		return minValue;
+	}
+	public void setMinValue(int minValue) {
+		this.minValue = minValue;
 	}
 	public String getPreClassifyData() {
 		return preClassifyData;
