@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.capstone.dao.ContactDAO;
 import com.capstone.dao.TestDAO;
 import com.capstone.dao.WeatherDataDAO;
-import com.capstone.model.Contact;
 import com.capstone.model.WeatherAndTidal;
+import com.capstone.scraping.WeatherAPI;
 import com.capstone.to.DataTO;
 
 /**
@@ -82,5 +84,23 @@ public class HomeController {
 		//model.addObject("contact", contact);
 		
 		return model;
+	}
+	
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	public ModelAndView insertPoint() throws JSONException{
+		WeatherAndTidal obj = new WeatherAndTidal();
+		weatherDataDAO.insert(obj);
+		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/generate", method = RequestMethod.POST)
+	public ModelAndView generateData() throws JSONException{
+		long time = System.currentTimeMillis();
+		time = time-86400000;
+		for(int i=0; i<150; i++){
+			WeatherAndTidal obj = new WeatherAndTidal(time);
+			weatherDataDAO.insert(obj);
+		}
+		return new ModelAndView("redirect:/");
 	}
 }

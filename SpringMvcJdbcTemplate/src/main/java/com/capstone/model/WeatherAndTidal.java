@@ -13,7 +13,7 @@ public class WeatherAndTidal {
 	private int precipProb; 
 	private String outlook;
 	private int windSpeed; 
-	private double precipMM;
+	private double precip;
 	private int visibility; 
 	private int swellDir; 
 	private int waterTemp; 
@@ -31,17 +31,29 @@ public class WeatherAndTidal {
 		lowTemp = WeatherAPI.getLowTemp(weather);
 		precipProb = WeatherAPI.getPrecipProb(weather);
 		outlook = WeatherAPI.getOutlook(weather);
-		windDir = WeatherAPI.getWindSpeed(weather);
+		windDir = WeatherAPI.getWindDir(weather);
+		windSpeed = WeatherAPI.getWindSpeed(weather);
+		visibility = WeatherAPI.getVisibility(weather);
+		precip = WeatherAPI.getPrecip(weather);
 		
 		JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
-		precipMM = TidalAPI.getPrecipMM(tidal);
-		visibility = TidalAPI.getVisibility(tidal);
 		swellDir = TidalAPI.getSwellDir(tidal);
 		waterTemp = TidalAPI.getWaterTemp(tidal);
 		swellHeight = TidalAPI.getSwellHeight(tidal);
 		swellPeriod = TidalAPI.getSwellPeriod(tidal);
-		windDir16Point = TidalAPI.getCardinalWindDir(tidal);
-		windSpeed = TidalAPI.getWindSpeed(tidal);
+	}
+	
+	public WeatherAndTidal(long unix) throws JSONException{
+		JSONObject weather = WeatherAPI.getPastWeather(unix);
+		date = WeatherAPI.getDate(weather);
+		highTemp = WeatherAPI.getHighTemp(weather);
+		lowTemp = WeatherAPI.getLowTemp(weather);
+		precipProb = WeatherAPI.getPrecipProb(weather);
+		outlook = WeatherAPI.getOutlook(weather);
+		windDir = WeatherAPI.getWindDir(weather);
+		windSpeed = WeatherAPI.getWindSpeed(weather);
+		visibility = WeatherAPI.getVisibility(weather);
+		precip = WeatherAPI.getPrecip(weather);
 	}
 	
 	public int getHighTemp() {
@@ -74,11 +86,11 @@ public class WeatherAndTidal {
 	public void setWindSpeed(int windSpeed) {
 		this.windSpeed = windSpeed;
 	}
-	public double getPrecipMM() {
-		return precipMM;
+	public double getPrecip() {
+		return precip;
 	}
-	public void setPrecipMM(double precipMM) {
-		this.precipMM = precipMM;
+	public void setPrecip(double precip) {
+		this.precip = precip;
 	}
 	public int getVisibility() {
 		return visibility;

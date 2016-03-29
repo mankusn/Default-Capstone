@@ -39,20 +39,20 @@ public class WeatherDataDAOImpl implements WeatherDataDAO {
 					data = new WeatherAndTidal();
 					data.setBoatCount(rs.getInt("boatcount"));
 					data.setDate(rs.getString("date"));
-					data.setHighTemp(rs.getInt("highTemp"));
-					data.setLowTemp(rs.getInt("lowTemp"));
+					data.setHighTemp(rs.getInt("hightemp"));
+					data.setLowTemp(rs.getInt("lowtemp"));
 					data.setOutlook(rs.getString("outlook"));
-					data.setPrecipMM(rs.getDouble("precipMM"));
-					data.setPrecipProb(rs.getInt("precipChance"));
-					data.setSwellDir(rs.getInt("swellDir"));
-					data.setSwellHeight(rs.getDouble("swellHeight_m"));
-					data.setSwellPeriod(rs.getDouble("swellPeriod_secs"));
+					data.setPrecip(rs.getDouble("precip"));
+					data.setPrecipProb(rs.getInt("precipchance"));
+					data.setSwellDir(rs.getInt("swelldir"));
+					data.setSwellHeight(rs.getDouble("swellheight_m"));
+					data.setSwellPeriod(rs.getDouble("swellperiod_secs"));
 					data.setVisibility(rs.getInt("visibility"));
-					data.setWaterTemp(rs.getInt("waterTemp_F"));
-					data.setWindDir(rs.getInt("windDir"));
-					data.setWindDir16Point(rs.getString("winddir16Point"));
+					data.setWaterTemp(rs.getInt("watertemp_f"));
+					data.setWindDir(rs.getInt("winddir"));
+					data.setWindDir16Point(rs.getString("winddir16point"));
 					//data.setWindDirDegree(rs.getInt("winddirDegree"));
-					data.setWindSpeed(rs.getInt("windSpeed"));
+					data.setWindSpeed(rs.getInt("windspeed"));
 					//data.setWindSpeedMiles(rs.getInt("windspeedMiles"));
 					return data;
 					
@@ -75,10 +75,10 @@ public class WeatherDataDAOImpl implements WeatherDataDAO {
 
 	@Override
 	public void insert(WeatherAndTidal data) {
-		String columns = "date, precipMM, visibility, waterTemp_F, winddirDegree, windspeedMiles, swellPeriod_secs, swellHeight_m, highTemp, lowTemp, precipChance, windspeed, boatcount, swellDir, outlook, winddir16Point, windDir";
-		String sql = "INSERT INTO public.data (" + columns + ")" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String columns = "date, precip, visibility, watertemp_f, swellperiod_secs, swellheight_m, hightemp, lowtemp, precipchance, windspeed, boatcount, outlook, winddir16point, swelldir, winddir";
+		String sql = "INSERT INTO public.data (" + columns + ")" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		jdbcTemplate.update(sql, data.getDate(), data.getPrecipMM(), data.getVisibility(), data.getWaterTemp(), /*data.getWindDirDegree(), data.getWindSpeedMiles(),*/ data.getSwellPeriod(), data.getSwellHeight(), data.getHighTemp(), data.getLowTemp(), data.getPrecipProb(), data.getWindSpeed(), data.getBoatCount(), data.getBoatCount(), data.getSwellDir(), data.getOutlook(), data.getWindDir16Point(), data.getWindDir());
+		jdbcTemplate.update(sql, data.getDate(), data.getPrecip(), data.getVisibility(), data.getWaterTemp(), data.getSwellPeriod(), data.getSwellHeight(), data.getHighTemp(), data.getLowTemp(), data.getPrecipProb(), data.getWindSpeed(), data.getBoatCount(), data.getOutlook(), data.getWindDir16Point(), data.getSwellDir(), data.getWindDir());
 		
 	}
 

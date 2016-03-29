@@ -120,6 +120,14 @@ public class WeatherAPI{
 	public static int getWindDir(JSONObject obj) throws JSONException{
 		return obj.getInt("windBearing");
 	}
+	
+	public static int getVisibility(JSONObject obj) throws JSONException{
+		return obj.getInt("visibility");
+	}
+	
+	public static double getPrecip(JSONObject obj) throws JSONException{
+		return obj.getDouble("precipIntensity");
+	}
 
 	public static void displayWeatherData(JSONObject obj) throws JSONException{
 		System.out.print("Date: ");
@@ -135,16 +143,20 @@ public class WeatherAPI{
 		System.out.print("Wind Speed: ");
 		System.out.println(getWindSpeed(obj));
 		System.out.print("Wind Direction (0 = N, 90 = E, etc): ");
-		System.out.println(getWindDir(obj));		
+		System.out.println(getWindDir(obj));	
+		System.out.print("Visibility: ");
+		System.out.println(getVisibility(obj));
+		System.out.print("Precipitation Intensity: ");
+		System.out.println(getPrecip(obj));
 		System.out.println();
 	}
 	
-	public static void main(String args[]) throws JSONException{
+	/*public static void main(String args[]) throws JSONException{
 		//Currently retrieves the last week of temperatures
 		//Uses American units (Fahrenheit, MPH)
 		System.out.println("TOMORROW'S FORECAST\n--------------------");
 		displayWeatherData(getNextDaysForecast());
 		System.out.println("YESTERDAY'S WEATHER\n--------------------");
 		displayWeatherData(getPastWeather(System.currentTimeMillis()));
-	}
+	}*/
 }
