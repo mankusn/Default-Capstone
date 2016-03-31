@@ -20,7 +20,6 @@ public class WeatherAndTidal {
 	private double swellHeight; 
 	private double swellPeriod; 
 	private String date; 
-	private String windDir16Point;
 	private int boatCount; 
 	private int windDir;
 	
@@ -127,12 +126,6 @@ public class WeatherAndTidal {
 	}
 	public void setDate(String date) {
 		this.date = date;
-	}
-	public String getWindDir16Point() {
-		return windDir16Point;
-	}
-	public void setWindDir16Point(String windDir16Point) {
-		this.windDir16Point = windDir16Point;
 	}
 	public int getBoatCount() {
 		return boatCount;
