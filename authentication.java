@@ -1,4 +1,4 @@
-package apitest;
+package test;
 
 import java.security.InvalidKeyException;
 
@@ -185,7 +185,7 @@ public class authentication{
 
 	
 	
-	public static void main(String args[]) throws Exception{
+	/*public static void main(String args[]) throws Exception{
 		//Currently retrieves the last week of temperatures
 		//Uses American units (Fahrenheit, MPH)
 		//System.out.println("NEXT WEEK'S FORECAST\n--------------------");
@@ -279,6 +279,6 @@ public class authentication{
 		
 		
 		rsaTest("hello");
-		*/
-	}
+		
+	}*/
 }
