@@ -22,6 +22,12 @@
 	        	</tr>
 				</c:forEach>	        	
 			</table>
+			<form action ="<c:url value="/insert" />" method = "POST">
+				<input type="submit" name="input" value="save" />
+			</form>
+			<form action ="<c:url value="/generate" />" method = "POST">
+				<input type="submit" name="generate" value="Generate One Year of Data" />
+			</form>
     	</div>
     </body>
 </html>

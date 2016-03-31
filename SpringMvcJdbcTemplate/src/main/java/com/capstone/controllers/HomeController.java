@@ -1,6 +1,7 @@
 package com.capstone.controllers;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,10 @@ import com.capstone.dao.ContactDAO;
 import com.capstone.dao.TestDAO;
 import com.capstone.dao.WeatherDataDAO;
 import com.capstone.model.WeatherAndTidal;
+import com.capstone.model.WeatherAndTidalString;
 import com.capstone.scraping.WeatherAPI;
 import com.capstone.to.DataTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * This controller routes accesses to the application to the appropriate
@@ -41,7 +44,7 @@ public class HomeController {
 	
 	//Maps to the page localhost:8080/capstone/
 	@RequestMapping(value="/")
-	public ModelAndView listContact(ModelAndView model) throws IOException{
+	public ModelAndView listContact(ModelAndView model) throws IOException, JSONException{
 		//List<DataTO> listData = testDAO.list();
 		//model.addObject("listData", listData);
 		//model.setViewName("home");
@@ -50,6 +53,10 @@ public class HomeController {
 		model.addObject("listData", listData);
 		model.setViewName("home");
 		
+		WeatherAndTidalString obj = new WeatherAndTidalString(listData.get(0));
+		HashMap<String,String> map = WeatherAndTidalString.getMap(obj);
+		System.out.println(map);
+		System.out.println(map.get("date"));
 		return model;
 	}
 	
