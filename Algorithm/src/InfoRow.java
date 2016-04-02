@@ -13,9 +13,8 @@ public class InfoRow {
 		
 		infoRow = new HashMap<String,Classifier>();
 		
-		for(Entry<String,String> entry:dataSet.entrySet()){
-			
-			infoRow.put(entry.getKey(),new Classifier(entry.getKey(),entry.getValue()));
+		for(String name:dataSet.keySet()){
+			infoRow.put(name,new Classifier(name,dataSet.get(name)));
 		}
 		
 		

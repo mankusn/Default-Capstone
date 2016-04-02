@@ -1,12 +1,32 @@
-import java.util.Vector;
+import java.util.*;
 
 
 public class Attribute {
 	
-	private double entropy;
 	private double infoGain;
 	private double min;
 	private double max;
+	private HashMap<String,Double> classesEntropy;
+	
+	
+	
+	public Attribute(String n){
+		name = n;
+		classesEntropy = new HashMap<String,Double>();
+		int numofClasses = 0;
+		if(name == "windDir"||name=="swellDir"){
+			numofClasses = 4;
+		}else if(name=="outlook"){
+			numofClasses = 10;
+		}else{
+			numofClasses = 3;
+		}
+		for(int i =1;i<=numofClasses;i++){
+			classesEntropy.put(Integer.toString(i), 0.0);
+		}
+	}
+	
+	
 	public double getMin() {
 		return min;
 	}
@@ -26,17 +46,15 @@ public class Attribute {
 	private String name;
 	private Vector<Attribute> children;
 	
-	public Attribute(String n){
-		name = n;
-	}
+	
 
-	public double getEntropy() {
+	public HashMap<String,Double> getEntropyValues() {
 		
-		return entropy;
+		return classesEntropy;
 	}
 
-	public void setEntropy(double entropy) {
-		this.entropy = entropy;
+	public void setEntropy(String className, double entropy) {
+		this.classesEntropy.put(className, entropy);
 	}
 
 	public double getInfoGain() {

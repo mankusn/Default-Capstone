@@ -4,7 +4,8 @@ public class DecisionTree {
 	private Attribute root;
 	
 	
-	public DecisionTree(){
+	public DecisionTree(Attribute r){
+		root = r;
 		
 	}
 	

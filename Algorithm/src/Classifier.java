@@ -135,7 +135,7 @@ public class Classifier {
 		double dataConversion = Double.parseDouble(this.preClassifyData);
 		this.setClassifierCount(3);
 		double currentValue = minValue;
-		while (currentValue <= dataConversion || currentValue != maxValue) {
+		while (currentValue <= dataConversion) {
 			currentValue += (maxValue - minValue)/classifierCount;
 			++count;
 		}
@@ -145,14 +145,23 @@ public class Classifier {
 	//This function is for any classification that goes into 3 categories, low, medium
 	//and high where low = 1, medium = 2, and high = 3. Must be integer value input
 	private int classifyThreeCategories(double minValue, double maxValue) {
+//		System.out.println("FOR: "+ this.name.toUpperCase());
 		int count = 0;
 		int dataConversion = Integer.parseInt(this.preClassifyData);
 		this.setClassifierCount(3);
-		int currentValue = (int) minValue;
-		while (currentValue <= dataConversion || currentValue != (int)maxValue) {
-			currentValue += ((int)maxValue - (int)minValue)/classifierCount;
+		double currentValue = minValue;
+		double change = 0;
+//		System.out.println(" Min: "+minValue+" Max: "+maxValue);
+		while (currentValue <= dataConversion && currentValue != maxValue) {
+			
+			change= (maxValue - minValue)/classifierCount;
+			currentValue += change;
 			++count;
+//			System.out.println("Count: "+ count );
+//			System.out.println("DataConversion: "+dataConversion);
+//			System.out.println("Current Value: "+currentValue);
 		}
+//		System.out.println("Being Returned!: "+count);
 		return count;
 	}
 	
