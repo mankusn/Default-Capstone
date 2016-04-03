@@ -3,15 +3,17 @@ import java.util.*;
 
 public class Attribute {
 	
-	private double infoGain;
+	
 	private double min;
 	private double max;
+	private HashMap<String,Double> InfoGain;
 	private HashMap<String,Double> classesEntropy;
 	
 	
 	
 	public Attribute(String n){
 		name = n;
+		InfoGain = new HashMap<String,Double>();
 		classesEntropy = new HashMap<String,Double>();
 		int numofClasses = 0;
 		if(name == "windDir"||name=="swellDir"){
@@ -27,6 +29,33 @@ public class Attribute {
 	}
 	
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Attribute other = (Attribute) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+
 	public double getMin() {
 		return min;
 	}
@@ -57,12 +86,12 @@ public class Attribute {
 		this.classesEntropy.put(className, entropy);
 	}
 
-	public double getInfoGain() {
-		return infoGain;
+	public HashMap<String,Double> getInfoGain() {
+		return InfoGain;
 	}
 
-	public void setInfoGain(double infoGain) {
-		this.infoGain = infoGain;
+	public void setInfoGain(String name, double infoGain) {
+		this.InfoGain.put(name,infoGain);
 	}
 
 	public String getName() {

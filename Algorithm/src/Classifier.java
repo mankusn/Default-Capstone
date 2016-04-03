@@ -206,8 +206,8 @@ public class Classifier {
 	public void setDataPoint(int dataPoint) {
 		this.dataPoint = dataPoint;
 	}
-	public String getCategory() {
-		return category;
+	public int getCategory() {
+		return dataPoint;
 	}
 
 	public void setCategory(String category) {
