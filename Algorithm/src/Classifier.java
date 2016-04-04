@@ -8,6 +8,10 @@ public class Classifier {
 	private String category;
 	private int classifierCount;
 	
+	
+	public Classifier(){
+		
+	}
 	public Classifier(String n, String data){
 		name = n;
 		setPreClassifyData(data);

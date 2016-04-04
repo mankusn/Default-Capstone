@@ -24,7 +24,15 @@ public class InfoRow {
 	
 	
 	//Getters & Setters
-	
+	public double[] getValues(){
+		double [] values = new double[infoRow.size()];
+		int count = 0;
+		for(String name:infoRow.keySet()){
+			values[count] = Double.parseDouble(infoRow.get(name).getPreClassifyData());
+			count++;
+		}
+		return values;
+	}
 	public HashMap<String,Classifier>getInfoRow(){
 		return this.infoRow;
 	}

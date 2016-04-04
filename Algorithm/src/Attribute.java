@@ -93,7 +93,9 @@ public class Attribute {
 	public void setInfoGain(String name, double infoGain) {
 		this.InfoGain.put(name,infoGain);
 	}
-
+	public double getInfoGain(String name){
+		return this.InfoGain.get(name);
+	}
 	public String getName() {
 		return name;
 	}
