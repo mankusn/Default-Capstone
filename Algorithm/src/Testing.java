@@ -4,15 +4,13 @@ public class Testing {
 	
 	
 	public static void main(String[] args) {
-		
+
 		Vector<InfoRow> dataSet = new Vector<InfoRow> ();
 		HashMap<String,String> rawData1 = new HashMap<String,String>();
 		HashMap<String,String> rawData2 = new HashMap<String,String>();
 		HashMap<String,String> rawData3 = new HashMap<String,String>();
 		HashMap<String,String> rawData4 = new HashMap<String,String>();
 		HashMap<String,String> testData = new HashMap<String,String>();
-		
-		
 		rawData1.put("windSpeed", "1");
 		rawData1.put("windDir", "2");
 		rawData1.put("highTemp", "3");
@@ -47,9 +45,9 @@ public class Testing {
 		testData.put("boatCount", "50");
 		InfoRow test = new InfoRow(testData);
 		
-		KNN knn = new KNN(dataSet,(int)Math.sqrt(dataSet.size()),test);
-		
-		System.out.print(knn.getPrediction());
+//		KNN knn = new KNN(dataSet,(int)Math.sqrt(dataSet.size()),test);
+//		
+//		System.out.print(knn.getPrediction());
 		
 		
 		

@@ -86,10 +86,10 @@ public class KNN {
 		for(int i =0;i<3;i++){
 			
 			upper = (int)temp+(int)change;
-			this.ranges[i] = Integer.toString((int)temp)+"-"+Integer.toString(upper)+ " boats";
-			temp = upper+1;
+			this.ranges[i] = Integer.toString((int)(temp+1))+"-"+Integer.toString(upper)+ " boats";
+			temp = upper;
 		}
-		this.ranges[3] = Integer.toString((int)temp)+"<";
+		this.ranges[3] = Integer.toString((int)temp+1)+"< boats";
 
 		
 	}
@@ -108,5 +108,39 @@ public class KNN {
 		}
 		
 	}
+
+	public Dataset getData() {
+		return data;
+	}
+
+	public void setData(Dataset data) {
+		this.data = data;
+	}
+
+	public InfoRow getTesting() {
+		return testing;
+	}
+
+	public void setTesting(InfoRow testing) {
+		this.testing = testing;
+	}
+
+	public Classifier getKnn() {
+		return knn;
+	}
+
+	public void setKnn(Classifier knn) {
+		this.knn = knn;
+	}
+
+	public String[] getRanges() {
+		return ranges;
+	}
+
+	public void setRanges(String[] ranges) {
+		this.ranges = ranges;
+	}
+	
+	
 
 }

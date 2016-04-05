@@ -16,23 +16,14 @@ public class InfoRow {
 		
 	}
 	
-	//Getters & Setters
-	public double[] getValues(){
-		double [] values = new double[infoRow.size()];
-		int count = 0;
-		for(String name:infoRow.keySet()){
-			values[count] = Double.parseDouble(infoRow.get(name));
-			count++;
-		}
-		return values;
-	}
+	//Returns Raw double values for Java-ML Instance. Excludes boatCount
 	public double[] getRawValues(){
-		double [] values = new double[infoRow.size()];
+		double [] values = new double[this.infoRow.size()-1];
 		int count = 0;
-		for(String name:infoRow.keySet()){
+		for(String name:new TreeSet<String>(this.infoRow.keySet())){
 			if (name=="boatCount")
 				continue;
-			values[count] = Double.parseDouble(infoRow.get(name));
+			values[count] = Double.parseDouble(this.infoRow.get(name));
 			count++;
 		}
 		return values;

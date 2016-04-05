@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="/Users/NMankus/CompSci/482/Algorithm/javaml-0.1.7/lib/Jama-1.0.2.jar"/>
 	<classpathentry kind="lib" path="/Users/NMankus/CompSci/482/Algorithm/javaml-0.1.7/lib/libsvm.jar"/>
 	<classpathentry kind="lib" path="/Users/NMankus/CompSci/482/Algorithm/javaml-0.1.7/lib/weka.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
