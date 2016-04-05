@@ -1,59 +1,50 @@
+/*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
 import java.util.*;
-import java.util.Map.Entry;
-
-
 public class InfoRow {
 	
 	//Create variable for each attribute
-	private HashMap<String,Classifier> infoRow;
-	private HashMap<String,Attribute> attributes;
+	private HashMap<String,String> infoRow;
 	//...
 	
-	public InfoRow(HashMap<String, String> dataSet,HashMap<String,Attribute> a){
+	public InfoRow(HashMap<String, String> dataSet){
 		
-		attributes = a;
-		infoRow = new HashMap<String,Classifier>();
+
+		infoRow = dataSet;
 		
-		for(String name:dataSet.keySet()){
-			infoRow.put(name,new Classifier(name,dataSet.get(name)));
-		}
 		
 		
 		
 	}
-	
 	
 	//Getters & Setters
 	public double[] getValues(){
 		double [] values = new double[infoRow.size()];
 		int count = 0;
 		for(String name:infoRow.keySet()){
-			values[count] = Double.parseDouble(infoRow.get(name).getPreClassifyData());
+			values[count] = Double.parseDouble(infoRow.get(name));
 			count++;
 		}
 		return values;
 	}
-	public HashMap<String,Classifier>getInfoRow(){
+	public double[] getRawValues(){
+		double [] values = new double[infoRow.size()];
+		int count = 0;
+		for(String name:infoRow.keySet()){
+			if (name=="boatCount")
+				continue;
+			values[count] = Double.parseDouble(infoRow.get(name));
+			count++;
+		}
+		return values;
+	}
+	public HashMap<String,String>getInfoRow(){
 		return this.infoRow;
 	}
 
-	public HashMap<String, Attribute> getAttributes() {
-		return attributes;
-	}
 
 
-	public void setAttributes(HashMap<String, Attribute> attributes) {
-		this.attributes = attributes;
-	}
 
-
-	//Classify every attribute
-	public void classifyRow(){
-		
-		for(String key:this.attributes.keySet()){
-			this.infoRow.get(key).classifyAttribute(attributes.get(key).getMin(),attributes.get(key).getMax());
-		}
-	}
+	
 	
 	
 		
