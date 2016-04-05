@@ -142,6 +142,7 @@ public class WeatherAPI{
 	/*public static void main(String args[]) throws JSONException{
 		//Currently retrieves the last week of temperatures
 		//Uses American units (Fahrenheit, MPH)
+		//Dummy comment to test github
 		System.out.println("TOMORROW'S FORECAST\n--------------------");
 		displayWeatherData(getNextDaysForecast());
 		System.out.println("YESTERDAY'S WEATHER\n--------------------");
