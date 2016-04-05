@@ -44,9 +44,12 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		//dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
-		dataSource.setUrl("jdbc:postgresql://data.c5zqwqcqepbr.us-west-2.rds.amazonaws.com:5432/predictionData");
-		dataSource.setUsername("teamdefault");
-		dataSource.setPassword("teamdefault");
+		//dataSource.setUrl("jdbc:postgresql://data.c5zqwqcqepbr.us-west-2.rds.amazonaws.com:5432/predictionData");
+		dataSource.setUrl("jdbc:postgresql://ec2-54-235-93-178.compute-1.amazonaws.com:5432/d79sju7eaqsi7c?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"); 
+		//dataSource.setUsername("teamdefault");
+		//dataSource.setPassword("teamdefault");
+		dataSource.setUsername("pwmrefdinrglit");
+		dataSource.setPassword("-knBqtlSOtrf3xIjHL093-DkGJ");
 
 		return dataSource;
 	}

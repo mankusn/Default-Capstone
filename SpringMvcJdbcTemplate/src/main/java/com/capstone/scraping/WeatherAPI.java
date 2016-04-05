@@ -38,8 +38,8 @@ public class WeatherAPI{
 	public static String makeAPIRequest(String date){
 		//Creates the API request string
 		String APIKey = "c62d91cb9c000638716e55cbc478330f"; //Replace this if we run out of requests on an account
-		String latitude = "30.6014";
-		String longitude = "-96.3144"; //College Station, TX
+		String latitude = "39.2645";
+		String longitude = "26.2777"; //Lesvos, Greece
 		String request = "https://api.forecast.io/forecast/" + APIKey + "/" + latitude + "," +
 						longitude;
 		if(!date.equals(""))
@@ -109,20 +109,12 @@ public class WeatherAPI{
 		return (int)(obj.getDouble("precipProbability")*100);
 	}
 	
-	public static String getOutlook(JSONObject obj) throws JSONException{
-		return obj.getString("summary");
-	}
-	
 	public static int getWindSpeed(JSONObject obj) throws JSONException{
 		return (int)(obj.getDouble("windSpeed"));
 	}
 	
 	public static int getWindDir(JSONObject obj) throws JSONException{
 		return obj.getInt("windBearing");
-	}
-	
-	public static int getVisibility(JSONObject obj) throws JSONException{
-		return obj.getInt("visibility");
 	}
 	
 	public static double getPrecip(JSONObject obj) throws JSONException{
@@ -138,14 +130,10 @@ public class WeatherAPI{
 		System.out.println(getLowTemp(obj));
 		System.out.print("Precipitation % Chance: ");
 		System.out.println(getPrecipProb(obj) + "%");
-		System.out.print("Outlook: ");
-		System.out.println(getOutlook(obj));
 		System.out.print("Wind Speed: ");
 		System.out.println(getWindSpeed(obj));
 		System.out.print("Wind Direction (0 = N, 90 = E, etc): ");
 		System.out.println(getWindDir(obj));	
-		System.out.print("Visibility: ");
-		System.out.println(getVisibility(obj));
 		System.out.print("Precipitation Intensity: ");
 		System.out.println(getPrecip(obj));
 		System.out.println();

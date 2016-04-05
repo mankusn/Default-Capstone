@@ -14,10 +14,8 @@ public class WeatherAndTidalString {
 	private String highTemp; 
 	private String lowTemp; 
 	private String precipProb; 
-	private String outlook;
 	private String windSpeed; 
 	private String precip;
-	private String visibility; 
 	private String swellDir; 
 	private String waterTemp; 
 	private String swellHeight; 
@@ -30,10 +28,8 @@ public class WeatherAndTidalString {
 		highTemp = String.valueOf(obj.getHighTemp());
 		lowTemp = String.valueOf(obj.getLowTemp());
 		precipProb = String.valueOf(obj.getPrecipProb());
-		outlook = obj.getOutlook();
 		windSpeed = String.valueOf(obj.getWindSpeed());
 		precip = String.valueOf(obj.getPrecip());
-		visibility = String.valueOf(obj.getVisibility());
 		swellDir = String.valueOf(obj.getSwellDir());
 		waterTemp = String.valueOf(obj.getWaterTemp());
 		swellHeight = String.valueOf(obj.getSwellHeight());
@@ -75,14 +71,6 @@ public class WeatherAndTidalString {
 		this.precipProb = precipProb;
 	}
 
-	public String getOutlook() {
-		return outlook;
-	}
-
-	public void setOutlook(String outlook) {
-		this.outlook = outlook;
-	}
-
 	public String getWindSpeed() {
 		return windSpeed;
 	}
@@ -97,14 +85,6 @@ public class WeatherAndTidalString {
 
 	public void setPrecip(String precip) {
 		this.precip = precip;
-	}
-
-	public String getVisibility() {
-		return visibility;
-	}
-
-	public void setVisibility(String visibility) {
-		this.visibility = visibility;
 	}
 
 	public String getSwellDir() {

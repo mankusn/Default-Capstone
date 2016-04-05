@@ -26,7 +26,7 @@
 				<input type="submit" name="input" value="save" />
 			</form>
 			<form action ="<c:url value="/generate" />" method = "POST">
-				<input type="submit" name="generate" value="Generate One Year of Data" />
+				<input type="submit" name="generate" value="Generate Tomorrow's Data" />
 			</form>
     	</div>
     </body>

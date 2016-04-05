@@ -11,10 +11,8 @@ public class WeatherAndTidal {
 	private int highTemp; 
 	private int lowTemp; 
 	private int precipProb; 
-	private String outlook;
 	private int windSpeed; 
 	private double precip;
-	private int visibility; 
 	private int swellDir; 
 	private int waterTemp; 
 	private double swellHeight; 
@@ -23,16 +21,16 @@ public class WeatherAndTidal {
 	private int boatCount; 
 	private int windDir;
 	
-	public WeatherAndTidal() throws JSONException{
-		JSONObject weather = WeatherAPI.getNextDaysForecast();
+	public WeatherAndTidal() throws JSONException{}
+	
+	/*public WeatherAndTidal(long unix) throws JSONException{
+		JSONObject weather = WeatherAPI.getPastWeather(unix);
 		date = WeatherAPI.getDate(weather);
 		highTemp = WeatherAPI.getHighTemp(weather);
 		lowTemp = WeatherAPI.getLowTemp(weather);
 		precipProb = WeatherAPI.getPrecipProb(weather);
-		outlook = WeatherAPI.getOutlook(weather);
 		windDir = WeatherAPI.getWindDir(weather);
 		windSpeed = WeatherAPI.getWindSpeed(weather);
-		visibility = WeatherAPI.getVisibility(weather);
 		precip = WeatherAPI.getPrecip(weather);
 		
 		JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
@@ -40,19 +38,26 @@ public class WeatherAndTidal {
 		waterTemp = TidalAPI.getWaterTemp(tidal);
 		swellHeight = TidalAPI.getSwellHeight(tidal);
 		swellPeriod = TidalAPI.getSwellPeriod(tidal);
-	}
+	}*/
 	
-	public WeatherAndTidal(long unix) throws JSONException{
-		JSONObject weather = WeatherAPI.getPastWeather(unix);
-		date = WeatherAPI.getDate(weather);
-		highTemp = WeatherAPI.getHighTemp(weather);
-		lowTemp = WeatherAPI.getLowTemp(weather);
-		precipProb = WeatherAPI.getPrecipProb(weather);
-		outlook = WeatherAPI.getOutlook(weather);
-		windDir = WeatherAPI.getWindDir(weather);
-		windSpeed = WeatherAPI.getWindSpeed(weather);
-		visibility = WeatherAPI.getVisibility(weather);
-		precip = WeatherAPI.getPrecip(weather);
+	public static WeatherAndTidal getTomorrow() throws JSONException{
+		WeatherAndTidal wat = new WeatherAndTidal();
+		JSONObject weather = WeatherAPI.getNextDaysForecast();
+		wat.date = WeatherAPI.getDate(weather);
+		wat.highTemp = WeatherAPI.getHighTemp(weather);
+		wat.lowTemp = WeatherAPI.getLowTemp(weather);
+		wat.precipProb = WeatherAPI.getPrecipProb(weather);
+		wat.windDir = WeatherAPI.getWindDir(weather);
+		wat.windSpeed = WeatherAPI.getWindSpeed(weather);
+		wat.precip = WeatherAPI.getPrecip(weather);
+		
+		JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
+		wat.swellDir = TidalAPI.getSwellDir(tidal);
+		wat.waterTemp = TidalAPI.getWaterTemp(tidal);
+		wat.swellHeight = TidalAPI.getSwellHeight(tidal);
+		wat.swellPeriod = TidalAPI.getSwellPeriod(tidal);
+		
+		return wat;
 	}
 	
 	public int getHighTemp() {
@@ -73,12 +78,6 @@ public class WeatherAndTidal {
 	public void setPrecipProb(int precipProb) {
 		this.precipProb = precipProb;
 	}
-	public String getOutlook() {
-		return outlook;
-	}
-	public void setOutlook(String outlook) {
-		this.outlook = outlook;
-	}
 	public int getWindSpeed() {
 		return windSpeed;
 	}
@@ -90,12 +89,6 @@ public class WeatherAndTidal {
 	}
 	public void setPrecip(double precip) {
 		this.precip = precip;
-	}
-	public int getVisibility() {
-		return visibility;
-	}
-	public void setVisibility(int visibility) {
-		this.visibility = visibility;
 	}
 	public int getSwellDir() {
 		return swellDir;

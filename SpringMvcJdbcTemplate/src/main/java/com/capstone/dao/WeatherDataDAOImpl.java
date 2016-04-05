@@ -41,13 +41,11 @@ public class WeatherDataDAOImpl implements WeatherDataDAO {
 					data.setDate(rs.getString("date"));
 					data.setHighTemp(rs.getInt("hightemp"));
 					data.setLowTemp(rs.getInt("lowtemp"));
-					data.setOutlook(rs.getString("outlook"));
 					data.setPrecip(rs.getDouble("precip"));
 					data.setPrecipProb(rs.getInt("precipchance"));
 					data.setSwellDir(rs.getInt("swelldir"));
 					data.setSwellHeight(rs.getDouble("swellheight_m"));
 					data.setSwellPeriod(rs.getDouble("swellperiod_secs"));
-					data.setVisibility(rs.getInt("visibility"));
 					data.setWaterTemp(rs.getInt("watertemp_f"));
 					data.setWindDir(rs.getInt("winddir"));
 					data.setWindSpeed(rs.getInt("windspeed"));
@@ -72,10 +70,10 @@ public class WeatherDataDAOImpl implements WeatherDataDAO {
 
 	@Override
 	public void insert(WeatherAndTidal data) {
-		String columns = "date, precip, visibility, watertemp_f, swellperiod_secs, swellheight_m, hightemp, lowtemp, precipchance, windspeed, boatcount, outlook, swelldir, winddir";
-		String sql = "INSERT INTO public.data (" + columns + ")" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String columns = "date, precip, watertemp_f, swellperiod_secs, swellheight_m, hightemp, lowtemp, precipchance, windspeed, boatcount, swelldir, winddir";
+		String sql = "INSERT INTO public.data (" + columns + ")" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		jdbcTemplate.update(sql, data.getDate(), data.getPrecip(), data.getVisibility(), data.getWaterTemp(), data.getSwellPeriod(), data.getSwellHeight(), data.getHighTemp(), data.getLowTemp(), data.getPrecipProb(), data.getWindSpeed(), data.getBoatCount(), data.getOutlook(), data.getSwellDir(), data.getWindDir());
+		jdbcTemplate.update(sql, data.getDate(), data.getPrecip(), data.getWaterTemp(), data.getSwellPeriod(), data.getSwellHeight(), data.getHighTemp(), data.getLowTemp(), data.getPrecipProb(), data.getWindSpeed(), data.getBoatCount(), data.getSwellDir(), data.getWindDir());
 		
 	}
 

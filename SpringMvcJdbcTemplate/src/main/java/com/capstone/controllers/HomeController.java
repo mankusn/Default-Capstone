@@ -53,10 +53,10 @@ public class HomeController {
 		model.addObject("listData", listData);
 		model.setViewName("home");
 		
-		WeatherAndTidalString obj = new WeatherAndTidalString(listData.get(0));
+		/*WeatherAndTidalString obj = new WeatherAndTidalString(listData.get(0));
 		HashMap<String,String> map = WeatherAndTidalString.getMap(obj);
 		System.out.println(map);
-		System.out.println(map.get("date"));
+		System.out.println(map.get("date"));*/
 		return model;
 	}
 	
@@ -102,12 +102,8 @@ public class HomeController {
 	
 	@RequestMapping(value = "/generate", method = RequestMethod.POST)
 	public ModelAndView generateData() throws JSONException{
-		long time = System.currentTimeMillis();
-		time = time-86400000;
-		for(int i=0; i<150; i++){
-			WeatherAndTidal obj = new WeatherAndTidal(time);
-			weatherDataDAO.insert(obj);
-		}
+		WeatherAndTidal obj = WeatherAndTidal.getTomorrow();
+		weatherDataDAO.insert(obj);
 		return new ModelAndView("redirect:/");
 	}
 }
