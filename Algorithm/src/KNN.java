@@ -28,7 +28,7 @@ public class KNN {
 		Instance instance = new DenseInstance(this.testing.getRawValues());
 		Object prediction = knn.classify(instance);
 		
-		return ranges[(int)(double)prediction ];
+		return ranges[(int)(double)prediction];
 		
 	}
 	//Converts raw data into Java-ML Dataset
@@ -36,7 +36,7 @@ public class KNN {
 		DenseInstance instance;
 		for(InfoRow row: dataSet){
 			instance = new DenseInstance(row.getRawValues());
-			instance.setClassValue( Double.parseDouble(row.getInfoRow().get("boatCount")));
+			instance.setClassValue( Double.parseDouble(row.getInfoRow().get("boatcount")));
 			this.data.add(instance);
 		}
 	}
@@ -49,7 +49,7 @@ public class KNN {
 		double temp= 0.0;
 		for(InfoRow row: dataSet){
 			for(String key:row.getInfoRow().keySet()){
-				if(key =="boatCount"){
+				if(key =="boatcount"){
 					temp = Double.parseDouble(row.getInfoRow().get(key));
 					if(temp> max)
 						max = temp;
@@ -101,9 +101,9 @@ public class KNN {
 		getRanges(minMax[0],minMax[1]);
 		double boatData = 0.0;
 		for(InfoRow row:dataSet){
-			boatData = Double.parseDouble(row.getInfoRow().get("boatCount"));
+			boatData = Double.parseDouble(row.getInfoRow().get("boatcount"));
 			newValue = Double.toString(classify(boatData,minMax[0],minMax[1]));
-			row.getInfoRow().put("boatCount", newValue );
+			row.getInfoRow().put("boatcount", newValue );
 			
 		}
 		
