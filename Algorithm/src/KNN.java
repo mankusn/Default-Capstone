@@ -28,7 +28,7 @@ public class KNN {
 		Instance instance = new DenseInstance(this.testing.getRawValues());
 		Object prediction = knn.classify(instance);
 		
-		return ranges[(int)(double)prediction -1];
+		return ranges[(int)(double)prediction ];
 		
 	}
 	//Converts raw data into Java-ML Dataset
@@ -68,7 +68,7 @@ public class KNN {
 	//Finds Specific class for boat data
 	private int classify(double dataConversion, double minValue, double maxValue) {
 
-		int count = 0;
+		int count = 1;
 		int classes = 4;
 		double currentValue = minValue;
 		double change = (maxValue - minValue)/classes;

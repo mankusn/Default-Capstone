@@ -8,8 +8,10 @@ public class InfoRow {
 	
 	public InfoRow(HashMap<String, String> dataSet){
 		
-
-		infoRow = dataSet;
+		infoRow = new HashMap<String,String>();
+		for(String name:dataSet.keySet()){
+			infoRow.put(name.toLowerCase(), dataSet.get(name));
+		}
 		
 		
 		
