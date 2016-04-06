@@ -14,7 +14,7 @@ public class KNN {
 	private Classifier knn;
 	private String[] ranges;
 	public KNN(Vector<InfoRow> d, int n, InfoRow test){
-		this.ranges = new String[4]; 
+		this.ranges = new String[5]; 
 		this.knn = new KNearestNeighbors(n);
 		this.data = new DefaultDataset();
 		this.testing = test;
@@ -27,6 +27,7 @@ public class KNN {
 	public Object getPrediction(){
 		Instance instance = new DenseInstance(this.testing.getRawValues());
 		Object prediction = knn.classify(instance);
+		
 		
 		return ranges[(int)(double)prediction];
 		
@@ -68,7 +69,7 @@ public class KNN {
 	//Finds Specific class for boat data
 	private int classify(double dataConversion, double minValue, double maxValue) {
 
-		int count = 1;
+		int count = 0;
 		int classes = 4;
 		double currentValue = minValue;
 		double change = (maxValue - minValue)/classes;
@@ -83,13 +84,14 @@ public class KNN {
 		double change = (max-min)/4;
 		double temp = min;
 		int upper = 0;
-		for(int i =0;i<3;i++){
+		this.ranges[0] =">="+min+" boats";
+		for(int i =1;i<=3;i++){
 			
 			upper = (int)temp+(int)change;
 			this.ranges[i] = Integer.toString((int)(temp+1))+"-"+Integer.toString(upper)+ " boats";
 			temp = upper;
 		}
-		this.ranges[3] = Integer.toString((int)temp+1)+"< boats";
+		this.ranges[4] = Integer.toString((int)temp+1)+"< boats";
 
 		
 	}
