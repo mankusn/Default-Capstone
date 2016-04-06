@@ -34,7 +34,7 @@ public class KNN {
 		Instance instance = new DenseInstance(this.testing.getRawValues());
 		Object prediction = knn.classify(instance);
 		
-		return ranges[(int)(double)prediction -1];
+		return ranges[(int)(double)prediction];
 		
 	}
 	//Converts raw data into Java-ML Dataset
