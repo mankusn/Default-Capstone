@@ -19,8 +19,7 @@ public class WeatherAndTidalString {
 	private String swellDir; 
 	private String waterTemp; 
 	private String swellHeight; 
-	private String swellPeriod; 
-	private String date; 
+	private String swellPeriod;  
 	private String boatCount; 
 	private String windDir;
 	
@@ -34,7 +33,6 @@ public class WeatherAndTidalString {
 		waterTemp = String.valueOf(obj.getWaterTemp());
 		swellHeight = String.valueOf(obj.getSwellHeight());
 		swellPeriod = String.valueOf(obj.getSwellPeriod());
-		date = obj.getDate();
 		boatCount = String.valueOf(obj.getBoatCount());
 		windDir = String.valueOf(obj.getWindDir());
 	}
@@ -45,6 +43,12 @@ public class WeatherAndTidalString {
 		HashMap<String,String> map = new HashMap<String,String>();
 		map = mapper.readValue(json, new TypeReference<HashMap<String,String>>(){});
         return map;
+	}
+	
+	public String toString() {
+		return highTemp + " " + lowTemp + " " + precipProb + " " + windSpeed + " " + precip + " " + 
+				swellDir + " " + waterTemp + " " + swellHeight + " " + swellPeriod + " " + 
+				boatCount + " " + windDir;
 	}
 
 	public String getHighTemp() {
@@ -117,14 +121,6 @@ public class WeatherAndTidalString {
 
 	public void setSwellPeriod(String swellPeriod) {
 		this.swellPeriod = swellPeriod;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
 	}
 
 	public String getBoatCount() {

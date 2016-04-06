@@ -3,6 +3,7 @@ package com.capstone.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.capstone.algorithm.InfoRow;
+import com.capstone.algorithm.KNN;
 import com.capstone.dao.ContactDAO;
 import com.capstone.dao.TestDAO;
 import com.capstone.dao.WeatherDataDAO;
@@ -52,6 +55,24 @@ public class HomeController {
 		List<WeatherAndTidal> listData = weatherDataDAO.list(); 
 		model.addObject("listData", listData);
 		model.setViewName("home");
+		
+		Vector<InfoRow> dataSet = new Vector<InfoRow>();
+		for(int index = 0; index < listData.size(); index++){
+			WeatherAndTidalString obj = new WeatherAndTidalString(listData.get(index));
+			HashMap<String,String> map = WeatherAndTidalString.getMap(obj);
+			InfoRow row = new InfoRow(map);
+			//System.out.println(row);
+			dataSet.add(row);
+			System.out.println(dataSet.get(index));
+		}
+		KNN knn = new KNN(dataSet,5);
+		
+		WeatherAndTidal tomorrowData = WeatherAndTidal.getTomorrow();
+		WeatherAndTidalString tomorrowString = new WeatherAndTidalString(tomorrowData);
+		HashMap<String,String> tomorrowMap = WeatherAndTidalString.getMap(tomorrowString);
+		InfoRow tomorrowRow = new InfoRow(tomorrowMap);
+		knn.addTest(tomorrowRow);
+		System.out.println(knn.getPrediction());
 		
 		/*WeatherAndTidalString obj = new WeatherAndTidalString(listData.get(0));
 		HashMap<String,String> map = WeatherAndTidalString.getMap(obj);

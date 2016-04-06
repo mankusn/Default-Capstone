@@ -16,8 +16,7 @@ public class WeatherAndTidal {
 	private int swellDir; 
 	private int waterTemp; 
 	private double swellHeight; 
-	private double swellPeriod; 
-	private String date; 
+	private double swellPeriod;  
 	private int boatCount; 
 	private int windDir;
 	
@@ -43,7 +42,6 @@ public class WeatherAndTidal {
 	public static WeatherAndTidal getTomorrow() throws JSONException{
 		WeatherAndTidal wat = new WeatherAndTidal();
 		JSONObject weather = WeatherAPI.getNextDaysForecast();
-		wat.date = WeatherAPI.getDate(weather);
 		wat.highTemp = WeatherAPI.getHighTemp(weather);
 		wat.lowTemp = WeatherAPI.getLowTemp(weather);
 		wat.precipProb = WeatherAPI.getPrecipProb(weather);
@@ -113,12 +111,6 @@ public class WeatherAndTidal {
 	}
 	public void setSwellPeriod(double swellPeriod) {
 		this.swellPeriod = swellPeriod;
-	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
 	}
 	public int getBoatCount() {
 		return boatCount;
