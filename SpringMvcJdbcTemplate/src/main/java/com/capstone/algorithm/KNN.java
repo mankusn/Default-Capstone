@@ -55,7 +55,7 @@ public class KNN {
 		double temp= 0.0;
 		for(InfoRow row: dataSet){
 			for(String key:row.getInfoRow().keySet()){
-				if(key =="boatcount"){
+				if(key =="boatcount" || key == "boatCount"){
 					temp = Double.parseDouble(row.getInfoRow().get(key));
 					if(temp> max)
 						max = temp;
