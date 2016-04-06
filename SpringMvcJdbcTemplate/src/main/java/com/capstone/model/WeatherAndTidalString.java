@@ -39,7 +39,7 @@ public class WeatherAndTidalString {
 	
 	public static HashMap<String,String> getMap(WeatherAndTidalString obj) throws JsonParseException, JsonMappingException, IOException, JSONException{
 		ObjectMapper mapper = new ObjectMapper(); 
-		String json = mapper.writeValueAsString(obj);
+		String json = mapper.writeValueAsString(obj).toLowerCase();
 		HashMap<String,String> map = new HashMap<String,String>();
 		map = mapper.readValue(json, new TypeReference<HashMap<String,String>>(){});
         return map;
