@@ -69,13 +69,13 @@ public class TidalAPI {
 		//tideObj.getString("waterTemp_F");
 		//JSONObject waterTemp = new JSONObject(tideObj.get("waterTemp_F"));
 		
-		System.out.println(" ending test ");
+		//System.out.println(" ending test ");
 		
-		System.out.println(" returning data for times (24 hr format):");
-		for(int i = 0; i < tempre.length(); i++){
-			String time = tempre.getJSONObject(i).getString("time");
-			System.out.println(time);
-		}
+		//System.out.println(" returning data for times (24 hr format):");
+		//for(int i = 0; i < tempre.length(); i++){
+			//String time = tempre.getJSONObject(i).getString("time");
+			//System.out.println(time);
+		//}
 		
 		return tempre;
 	}

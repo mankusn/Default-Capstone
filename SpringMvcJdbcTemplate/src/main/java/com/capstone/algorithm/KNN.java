@@ -15,14 +15,17 @@ public class KNN {
 	private InfoRow testing;
 	private Classifier knn;
 	private String[] ranges;
-	public KNN(Vector<InfoRow> d, int n, InfoRow test){
+	public KNN(Vector<InfoRow> d, int n){
 		this.ranges = new String[5]; 
 		this.knn = new KNearestNeighbors(n);
 		this.data = new DefaultDataset();
-		this.testing = test;
 		classifyBoatData(d);
 		importData(d);
 		this.knn.buildClassifier(this.data);
+	}
+	
+	public void addTest(InfoRow test){
+		this.testing = test;
 	}
 	
 	//Returns Prediction of Classification

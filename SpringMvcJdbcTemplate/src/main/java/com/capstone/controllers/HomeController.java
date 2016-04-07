@@ -63,7 +63,7 @@ public class HomeController {
 			InfoRow row = new InfoRow(map);
 			//System.out.println(row);
 			dataSet.add(row);
-			System.out.println(dataSet.get(index));
+			//System.out.println(dataSet.get(index));
 		}
 		KNN knn = new KNN(dataSet,5);
 		
