@@ -72,7 +72,11 @@ public class HomeController {
 		HashMap<String,String> tomorrowMap = WeatherAndTidalString.getMap(tomorrowString);
 		InfoRow tomorrowRow = new InfoRow(tomorrowMap);
 		knn.addTest(tomorrowRow);
-		System.out.println(knn.getPrediction());
+		Object predictionObj = knn.getPrediction();
+		String prediction = (String)predictionObj;
+		//System.out.println(knn.getPrediction());
+		
+		model.addObject("prediction", prediction);
 		
 		/*WeatherAndTidalString obj = new WeatherAndTidalString(listData.get(0));
 		HashMap<String,String> map = WeatherAndTidalString.getMap(obj);
@@ -81,7 +85,7 @@ public class HomeController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/newData", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/newData", method = RequestMethod.GET)
 	public ModelAndView newContact(ModelAndView model) {
 		DataTO newData = new DataTO();
 		model.addObject("data", newData);
@@ -112,7 +116,7 @@ public class HomeController {
 		//model.addObject("contact", contact);
 		
 		return model;
-	}
+	}*/
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public ModelAndView insertPoint() throws JSONException{
