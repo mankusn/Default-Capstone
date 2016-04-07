@@ -1,8 +1,7 @@
-/*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
 package com.capstone.algorithm;
 
+/*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
 import java.util.*;
-
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.classification.KNearestNeighbors;
 import net.sf.javaml.core.Dataset;
@@ -16,23 +15,21 @@ public class KNN {
 	private InfoRow testing;
 	private Classifier knn;
 	private String[] ranges;
-	public KNN(Vector<InfoRow> d, int n){
-		this.ranges = new String[4]; 
+	public KNN(Vector<InfoRow> d, int n, InfoRow test){
+		this.ranges = new String[5]; 
 		this.knn = new KNearestNeighbors(n);
 		this.data = new DefaultDataset();
+		this.testing = test;
 		classifyBoatData(d);
 		importData(d);
 		this.knn.buildClassifier(this.data);
-	}
-	
-	public void addTest(InfoRow test){
-		this.testing = test;
 	}
 	
 	//Returns Prediction of Classification
 	public Object getPrediction(){
 		Instance instance = new DenseInstance(this.testing.getRawValues());
 		Object prediction = knn.classify(instance);
+		
 		
 		return ranges[(int)(double)prediction];
 		
@@ -55,7 +52,7 @@ public class KNN {
 		double temp= 0.0;
 		for(InfoRow row: dataSet){
 			for(String key:row.getInfoRow().keySet()){
-				if(key =="boatcount" || key == "boatCount"){
+				if(key =="boatcount"){
 					temp = Double.parseDouble(row.getInfoRow().get(key));
 					if(temp> max)
 						max = temp;
@@ -89,13 +86,14 @@ public class KNN {
 		double change = (max-min)/4;
 		double temp = min;
 		int upper = 0;
-		for(int i =0;i<3;i++){
+		this.ranges[0] =">="+min+" boats";
+		for(int i =1;i<=3;i++){
 			
 			upper = (int)temp+(int)change;
 			this.ranges[i] = Integer.toString((int)(temp+1))+"-"+Integer.toString(upper)+ " boats";
 			temp = upper;
 		}
-		this.ranges[3] = Integer.toString((int)temp+1)+"< boats";
+		this.ranges[4] = Integer.toString((int)temp+1)+"< boats";
 
 		
 	}
@@ -108,7 +106,6 @@ public class KNN {
 		double boatData = 0.0;
 		for(InfoRow row:dataSet){
 			boatData = Double.parseDouble(row.getInfoRow().get("boatcount"));
-			System.out.println(boatData);
 			newValue = Double.toString(classify(boatData,minMax[0],minMax[1]));
 			row.getInfoRow().put("boatcount", newValue );
 			

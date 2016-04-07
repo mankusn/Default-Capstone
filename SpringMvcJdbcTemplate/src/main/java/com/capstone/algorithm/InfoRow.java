@@ -1,4 +1,5 @@
 package com.capstone.algorithm;
+
 /*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
 import java.util.*;
 public class InfoRow {
@@ -9,12 +10,10 @@ public class InfoRow {
 	
 	public InfoRow(HashMap<String, String> dataSet){
 		
-
-		infoRow = dataSet;
-		
-		
-		
-		
+		infoRow = new HashMap<String,String>();
+		for(String name:dataSet.keySet()){
+			infoRow.put(name.toLowerCase(), dataSet.get(name));
+		}	
 	}
 	
 	//Returns Raw double values for Java-ML Instance. Excludes boatCount
@@ -22,11 +21,8 @@ public class InfoRow {
 		double [] values = new double[this.infoRow.size()-1];
 		int count = 0;
 		for(String name:new TreeSet<String>(this.infoRow.keySet())){
-			if (name=="boatcount" || name == "boatCount"){
-				if(name == "boatCount")
-					name = "boatcount"; // reset name to all lowercase boatcount
+			if (name=="boatcount")
 				continue;
-			}
 			values[count] = Double.parseDouble(this.infoRow.get(name));
 			count++;
 		}
@@ -35,21 +31,4 @@ public class InfoRow {
 	public HashMap<String,String>getInfoRow(){
 		return this.infoRow;
 	}
-
-	public String toString() {
-		for(String name: infoRow.keySet()){
-			System.out.println(name + ": " + infoRow.get(name));
-		}
-		return "";
-	}
-	
-
-
-
-	
-	
-	
-		
-
 }
-

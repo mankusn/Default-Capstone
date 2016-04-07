@@ -13,11 +13,9 @@
 	        <h1>Contact List</h1>
 	        <h3><a href="newData">New Data</a></h3>
 	        <table border="1">
-	        	<th>Date</th>
 	        	<th>Boat Count</th>	
 				<c:forEach var="data" items="${listData}" varStatus="status">
 	        	<tr>
-					<td>${data.date}</td>
 					<td>${data.boatCount}</td>		
 	        	</tr>
 				</c:forEach>	        	
