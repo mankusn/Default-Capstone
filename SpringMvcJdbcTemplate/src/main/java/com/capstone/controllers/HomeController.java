@@ -65,7 +65,7 @@ public class HomeController {
 			dataSet.add(row);
 			System.out.println(dataSet.get(index));
 		}
-		KNN knn = new KNN(dataSet,5);
+		KNN knn = new KNN(dataSet,5,"boatcount_one");
 		
 		WeatherAndTidal tomorrowData = WeatherAndTidal.getTomorrow();
 		WeatherAndTidalString tomorrowString = new WeatherAndTidalString(tomorrowData);
