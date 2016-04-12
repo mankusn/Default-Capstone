@@ -17,37 +17,41 @@ public class WeatherAndTidal {
 	private int waterTemp; 
 	private double swellHeight; 
 	private double swellPeriod;  
-	private int boatCount; 
+	private int boatCount;
+	private int boatCount2;
+	private int boatCount3;
+	private int boatCount4;
+	private int boatTotal;
 	private int windDir;
 	
 	public WeatherAndTidal() throws JSONException{}
 	
-	/*public WeatherAndTidal(long unix) throws JSONException{
+	public WeatherAndTidal(long unix) throws JSONException{
 		JSONObject weather = WeatherAPI.getPastWeather(unix);
-		date = WeatherAPI.getDate(weather);
+		//date = WeatherAPI.getDate(weather);
 		highTemp = WeatherAPI.getHighTemp(weather);
 		lowTemp = WeatherAPI.getLowTemp(weather);
-		precipProb = WeatherAPI.getPrecipProb(weather);
+		//precipProb = WeatherAPI.getPrecipProb(weather);
 		windDir = WeatherAPI.getWindDir(weather);
 		windSpeed = WeatherAPI.getWindSpeed(weather);
-		precip = WeatherAPI.getPrecip(weather);
+		//precip = WeatherAPI.getPrecip(weather);
 		
-		JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
+		/*JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
 		swellDir = TidalAPI.getSwellDir(tidal);
 		waterTemp = TidalAPI.getWaterTemp(tidal);
 		swellHeight = TidalAPI.getSwellHeight(tidal);
-		swellPeriod = TidalAPI.getSwellPeriod(tidal);
-	}*/
+		swellPeriod = TidalAPI.getSwellPeriod(tidal);*/
+	}
 	
 	public static WeatherAndTidal getTomorrow() throws JSONException{
 		WeatherAndTidal wat = new WeatherAndTidal();
 		JSONObject weather = WeatherAPI.getNextDaysForecast();
 		wat.highTemp = WeatherAPI.getHighTemp(weather);
 		wat.lowTemp = WeatherAPI.getLowTemp(weather);
-		wat.precipProb = WeatherAPI.getPrecipProb(weather);
+		//wat.precipProb = WeatherAPI.getPrecipProb(weather);
 		wat.windDir = WeatherAPI.getWindDir(weather);
 		wat.windSpeed = WeatherAPI.getWindSpeed(weather);
-		wat.precip = WeatherAPI.getPrecip(weather);
+		//wat.precip = WeatherAPI.getPrecip(weather);
 		
 		JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
 		wat.swellDir = TidalAPI.getSwellDir(tidal);
@@ -123,6 +127,38 @@ public class WeatherAndTidal {
 	}
 	public void setWindDir(int windDir) {
 		this.windDir = windDir;
+	}
+
+	public int getBoatCount2() {
+		return boatCount2;
+	}
+
+	public void setBoatCount2(int boatCount2) {
+		this.boatCount2 = boatCount2;
+	}
+
+	public int getBoatCount3() {
+		return boatCount3;
+	}
+
+	public void setBoatCount3(int boatCount3) {
+		this.boatCount3 = boatCount3;
+	}
+
+	public int getBoatCount4() {
+		return boatCount4;
+	}
+
+	public void setBoatCount4(int boatCount4) {
+		this.boatCount4 = boatCount4;
+	}
+
+	public int getBoatTotal() {
+		return boatTotal;
+	}
+
+	public void setBoatTotal(int boatTotal) {
+		this.boatTotal = boatTotal;
 	} 
 	
 	

@@ -25,7 +25,9 @@ import com.capstone.model.WeatherAndTidal;
 import com.capstone.model.WeatherAndTidalString;
 import com.capstone.scraping.WeatherAPI;
 import com.capstone.to.DataTO;
+import com.capstone.utility.CSVParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.capstone.model.Tidal;
 
 /**
  * This controller routes accesses to the application to the appropriate

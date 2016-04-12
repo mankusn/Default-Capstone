@@ -22,7 +22,7 @@ public class WeatherAPITest{
 	@Test
 	public void pastHighTemperatureShouldBe91Point57() throws JSONException{
 		JSONObject weather = WeatherAPI.getPastWeather(unixTime);
-		assertEquals("The high temperature on June 9th, 2015 should be",91.57,weather.getDouble("temperatureMax"),1);
+		assertEquals("The high temperature in Lesvos on June 9th, 2015 should be",75.59,weather.getDouble("temperatureMax"),1);
 	}
 	
 	@Test

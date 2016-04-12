@@ -21,6 +21,10 @@ public class WeatherAndTidalString {
 	private String swellHeight; 
 	private String swellPeriod;  
 	private String boatCount; 
+	private String boatCount2;
+	private String boatCount3;
+	private String boatCount4;
+	private String boatTotal;
 	private String windDir;
 	
 	public WeatherAndTidalString(WeatherAndTidal obj){
@@ -34,6 +38,10 @@ public class WeatherAndTidalString {
 		swellHeight = String.valueOf(obj.getSwellHeight());
 		swellPeriod = String.valueOf(obj.getSwellPeriod());
 		boatCount = String.valueOf(obj.getBoatCount());
+		boatCount2 = String.valueOf(obj.getBoatCount2());
+		boatCount3= String.valueOf(obj.getBoatCount3());
+		boatCount4= String.valueOf(obj.getBoatCount4());
+		boatTotal = String.valueOf(obj.getBoatTotal());
 		windDir = String.valueOf(obj.getWindDir());
 	}
 	
@@ -48,7 +56,7 @@ public class WeatherAndTidalString {
 	public String toString() {
 		return highTemp + " " + lowTemp + " " + precipProb + " " + windSpeed + " " + precip + " " + 
 				swellDir + " " + waterTemp + " " + swellHeight + " " + swellPeriod + " " + 
-				boatCount + " " + windDir;
+				boatCount + " " + boatCount2 + " " + boatCount3 + " " + boatCount4 + " " + windDir;
 	}
 
 	public String getHighTemp() {
@@ -137,5 +145,37 @@ public class WeatherAndTidalString {
 
 	public void setWindDir(String windDir) {
 		this.windDir = windDir;
+	}
+
+	public String getBoatCount2() {
+		return boatCount2;
+	}
+
+	public void setBoatCount2(String boatCount2) {
+		this.boatCount2 = boatCount2;
+	}
+
+	public String getBoatCount3() {
+		return boatCount3;
+	}
+
+	public void setBoatCount3(String boatCount3) {
+		this.boatCount3 = boatCount3;
+	}
+
+	public String getBoatCount4() {
+		return boatCount4;
+	}
+
+	public void setBoatCount4(String boatCount4) {
+		this.boatCount4 = boatCount4;
+	}
+	
+	public String getBoatTotal() {
+		return boatTotal;
+	}
+
+	public void setBoatTotal(String boatTotal) {
+		this.boatTotal = boatTotal;
 	}
 }

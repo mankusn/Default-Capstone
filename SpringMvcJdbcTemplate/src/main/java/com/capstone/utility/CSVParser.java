@@ -13,7 +13,7 @@ public class CSVParser {
 	
 	public static List<Tidal> parseCSV() throws IOException{
 		BufferedReader reader = new BufferedReader(new FileReader(
-	            "C:\\Users\\Tyler\\Downloads\\Default-Capstone-db-api-integration\\Default-Capstone-db-api-integration\\SpringMvcJdbcTemplate\\data.csv"));
+	            "C:\\Users\\Nick\\Downloads\\data.csv"));
 		
 	    // read file line by line
 	    String line = null;
@@ -33,9 +33,18 @@ public class CSVParser {
 	                tide.setSwellHeight(Integer.parseInt(data));
 	            else if (index == 4)
 	                tide.setSwellPeriod(Integer.parseInt(data));
-	            else if (index == 2)
-	                tide.setWaterTempF(Integer.parseInt(data));
-	       
+	            else if (index == 5)
+	                tide.setWaterTempF((int)Double.parseDouble(data));
+				else if (index == 12)
+					tide.setBoatCount1(Integer.parseInt(data));
+				else if (index == 13)
+					tide.setBoatCount2(Integer.parseInt(data));
+				else if (index == 14)
+					tide.setBoatCount3(Integer.parseInt(data));
+				else if (index == 15)
+					tide.setBoatCount4(Integer.parseInt(data));
+				else if (index == 16)
+					tide.setTotal_boatcount(Integer.parseInt(data));
 	            index++;
 	        }
 	        index = 0;
