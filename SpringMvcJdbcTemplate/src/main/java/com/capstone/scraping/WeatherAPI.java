@@ -94,6 +94,7 @@ public class WeatherAPI{
 	public static String getDate(JSONObject obj) throws JSONException{
 		String fullTime = unixTimeToDate((obj.getLong("time")*1000));
 		String date = fullTime.substring(0, 10);
+		System.out.println(date);
 		return date;
 	}
 	

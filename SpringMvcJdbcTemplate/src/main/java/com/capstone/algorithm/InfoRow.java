@@ -21,7 +21,7 @@ public class InfoRow {
 		double [] values = new double[this.infoRow.size()-1];
 		int count = 0;
 		for(String name:new TreeSet<String>(this.infoRow.keySet())){
-			if (name=="boatcount")
+			if (name.contains("boatcount"))
 				continue;
 			values[count] = Double.parseDouble(this.infoRow.get(name));
 			count++;

@@ -2,6 +2,7 @@ package com.capstone.model;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Vector;
 
 import org.json.JSONException;
 
@@ -54,9 +55,22 @@ public class WeatherAndTidalString {
 	}
 	
 	public String toString() {
-		return highTemp + " " + lowTemp + " " + precipProb + " " + windSpeed + " " + precip + " " + 
-				swellDir + " " + waterTemp + " " + swellHeight + " " + swellPeriod + " " + 
-				boatCount + " " + boatCount2 + " " + boatCount3 + " " + boatCount4 + " " + windDir;
+		return "High temp: " + highTemp + "\nLow temp: " + lowTemp + "\nWind speed: " + windSpeed + 
+				"\nSwell direction: " + swellDir + "\nWater temp: " + waterTemp + "\nSwell Height: " + swellHeight + 
+				"\nSwell period:  " + swellPeriod + "\nWind direction: " + windDir;
+	}
+	
+	public Vector<String> stringForecast(){
+		Vector<String> vec = new Vector<String>();
+		vec.add("High temp: " + highTemp + "\u00b0" + "F");
+		vec.add("Low temp: " + lowTemp + "\u00b0" + "F");
+		vec.add("Wind speed: " + windSpeed + "mph");
+		vec.add("Swell direction: " + swellDir + "\u00b0");
+		vec.add("Water temp: " + waterTemp + "\u00b0" + "F");
+		vec.add("Swell Height: " + swellHeight + "m");
+		vec.add("Swell period:  " + swellPeriod + "s");
+		vec.add("Wind direction: " + windDir + "\u00b0");
+		return vec;
 	}
 
 	public String getHighTemp() {

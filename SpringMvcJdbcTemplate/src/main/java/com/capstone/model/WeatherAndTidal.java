@@ -9,6 +9,7 @@ import com.capstone.scraping.WeatherAPI;
 public class WeatherAndTidal {
 
 	private int highTemp; 
+	private String date;
 	private int lowTemp; 
 	private int precipProb; 
 	private int windSpeed; 
@@ -28,7 +29,7 @@ public class WeatherAndTidal {
 	
 	public WeatherAndTidal(long unix) throws JSONException{
 		JSONObject weather = WeatherAPI.getPastWeather(unix);
-		//date = WeatherAPI.getDate(weather);
+		date = WeatherAPI.getDate(weather);
 		highTemp = WeatherAPI.getHighTemp(weather);
 		lowTemp = WeatherAPI.getLowTemp(weather);
 		//precipProb = WeatherAPI.getPrecipProb(weather);
@@ -60,6 +61,14 @@ public class WeatherAndTidal {
 		wat.swellPeriod = TidalAPI.getSwellPeriod(tidal);
 		
 		return wat;
+	}
+	
+	public void setDate(String date){
+		this.date = date;
+	}
+	
+	public String getDate(){
+		return date;
 	}
 	
 	public int getHighTemp() {

@@ -54,18 +54,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 		return dataSource;
 	}
 	
-	
-	@Bean
-	public ContactDAO getContactDAO() {
-		return new ContactDAOImpl(getDataSource());
-	}
-
-	//Bean for DAO. Used for autowiring
-	@Bean
-	public TestDAO getTestDao() {
-		return new TestDAOImpl(getDataSource());
-	}
-	
 	@Bean
 	public WeatherDataDAO getWeatherAndTidalDao(){
 		return new WeatherDataDAOImpl(getDataSource());
