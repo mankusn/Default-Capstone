@@ -1,8 +1,7 @@
+
+
 /*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
-package com.capstone.algorithm;
-
 import java.util.*;
-
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.classification.KNearestNeighbors;
 import net.sf.javaml.core.Dataset;
@@ -15,9 +14,11 @@ public class KNN {
 	private Dataset data;
 	private InfoRow testing;
 	private Classifier knn;
+	private String column;
 	private String[] ranges;
-	public KNN(Vector<InfoRow> d, int n){
-		this.ranges = new String[4]; 
+	public KNN(Vector<InfoRow> d, int n, String col/*What boatcount we want*/){
+		this.ranges = new String[5]; 
+		column = col;
 		this.knn = new KNearestNeighbors(n);
 		this.data = new DefaultDataset();
 		classifyBoatData(d);
@@ -34,7 +35,8 @@ public class KNN {
 		Instance instance = new DenseInstance(this.testing.getRawValues());
 		Object prediction = knn.classify(instance);
 		
-		return ranges[(int)(double)prediction -1];
+		
+		return ranges[(int)(double)prediction];
 		
 	}
 	//Converts raw data into Java-ML Dataset
@@ -42,7 +44,7 @@ public class KNN {
 		DenseInstance instance;
 		for(InfoRow row: dataSet){
 			instance = new DenseInstance(row.getRawValues());
-			instance.setClassValue( Double.parseDouble(row.getInfoRow().get("boatcount")));
+			instance.setClassValue( Double.parseDouble(row.getInfoRow().get(this.column)));
 			this.data.add(instance);
 		}
 	}
@@ -55,7 +57,7 @@ public class KNN {
 		double temp= 0.0;
 		for(InfoRow row: dataSet){
 			for(String key:row.getInfoRow().keySet()){
-				if(key =="boatcount" || key == "boatCount"){
+				if(key ==this.column){
 					temp = Double.parseDouble(row.getInfoRow().get(key));
 					if(temp> max)
 						max = temp;
@@ -89,13 +91,14 @@ public class KNN {
 		double change = (max-min)/4;
 		double temp = min;
 		int upper = 0;
-		for(int i =0;i<3;i++){
+		this.ranges[0] =">="+min+" boats";
+		for(int i =1;i<=3;i++){
 			
 			upper = (int)temp+(int)change;
 			this.ranges[i] = Integer.toString((int)(temp+1))+"-"+Integer.toString(upper)+ " boats";
 			temp = upper;
 		}
-		this.ranges[3] = Integer.toString((int)temp+1)+"< boats";
+		this.ranges[4] = Integer.toString((int)temp+1)+"< boats";
 
 		
 	}
@@ -107,10 +110,9 @@ public class KNN {
 		getRanges(minMax[0],minMax[1]);
 		double boatData = 0.0;
 		for(InfoRow row:dataSet){
-			boatData = Double.parseDouble(row.getInfoRow().get("boatcount"));
-			System.out.println(boatData);
+			boatData = Double.parseDouble(row.getInfoRow().get(this.column));
 			newValue = Double.toString(classify(boatData,minMax[0],minMax[1]));
-			row.getInfoRow().put("boatcount", newValue );
+			row.getInfoRow().put(this.column, newValue );
 			
 		}
 		
