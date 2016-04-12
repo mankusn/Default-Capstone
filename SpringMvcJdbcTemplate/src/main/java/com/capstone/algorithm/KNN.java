@@ -1,7 +1,5 @@
 package com.capstone.algorithm;
 
-
-
 /*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
 import java.util.*;
 import net.sf.javaml.classification.Classifier;
@@ -101,9 +99,7 @@ public class KNN {
 			this.ranges[i] = Integer.toString((int)(temp+1))+"-"+Integer.toString(upper)+ " BOATS";
 			temp = upper;
 		}
-		this.ranges[numClasses] = Integer.toString((int)temp+1)+"< BOATS";
-
-		
+		this.ranges[numClasses] = Integer.toString((int)temp+1)+"< BOATS";		
 	}
 	//Classifies Boat Data in 6 classes
 	private void classifyBoatData(Vector<InfoRow> dataSet){

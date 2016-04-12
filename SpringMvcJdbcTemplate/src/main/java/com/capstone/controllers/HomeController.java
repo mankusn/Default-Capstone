@@ -67,7 +67,7 @@ public class HomeController {
 		NeuralNetwork knn3 = new NeuralNetwork(dataSet,"boatcount3");
 		NeuralNetwork knn4 = new NeuralNetwork(dataSet,"boatcount4");
 		NeuralNetwork knntot = new NeuralNetwork(dataSet,"boattotal");
-		
+
 		WeatherAndTidal tomorrowData = WeatherAndTidal.getTomorrow();
 		WeatherAndTidalString tomorrowString = new WeatherAndTidalString(tomorrowData);
 		HashMap<String,String> tomorrowMap = WeatherAndTidalString.getMap(tomorrowString);
