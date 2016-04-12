@@ -35,13 +35,13 @@ public class TidalAPI {
 		JSONArray tempre = temp.getJSONArray("hourly");
 		
 		
-		System.out.println(" ending test ");
+		//System.out.println(" ending test ");
 		
-		System.out.println(" returning data for times (24 hr format):");
-		for(int i = 0; i < tempre.length(); i++){
-			String time = tempre.getJSONObject(i).getString("time");
-			System.out.println(time);
-		}
+		//System.out.println(" returning data for times (24 hr format):");
+		//for(int i = 0; i < tempre.length(); i++){
+			//String time = tempre.getJSONObject(i).getString("time");
+			//System.out.println(time);
+		//}
 		
 		return tempre;
 	}

@@ -1,4 +1,4 @@
-
+package com.capstone.algorithm;
 
 /*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
 import java.util.*;

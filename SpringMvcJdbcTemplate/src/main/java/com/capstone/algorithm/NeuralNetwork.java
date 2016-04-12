@@ -1,30 +1,32 @@
 package com.capstone.algorithm;
 
-/*Copyright 2016 Team Default TAMU CSCE 482 Dr. Murphy*/
-import java.util.*;
+import java.util.Vector;
+
+import weka.classifiers.functions.SMO;
+
 import net.sf.javaml.classification.Classifier;
-import net.sf.javaml.classification.KNearestNeighbors;
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
 import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
+import net.sf.javaml.tools.weka.WekaClassifier;
 
-public class KNN {
-	
+public class NeuralNetwork {
 	private Dataset data;
 	private InfoRow testing;
-	private Classifier knn;
+	private WekaClassifier javasmo;
 	private String column;
 	private String[] ranges;
 	final private int numClasses = 10;
-	public KNN(Vector<InfoRow> d, int n, String col/*What boatcount we want*/){
-		this.ranges = new String[numClasses+1]; 
+	public NeuralNetwork(Vector<InfoRow> d, String col){
+		this.ranges = new String[numClasses + 1]; 
 		column = col;
-		this.knn = new KNearestNeighbors(n);
+		SMO smo = new SMO();
+		this.javasmo = new WekaClassifier(smo);;
 		this.data = new DefaultDataset();
 		classifyBoatData(d);
 		importData(d);
-		this.knn.buildClassifier(this.data);
+		this.javasmo.buildClassifier(this.data);
 	}
 	
 	public void addTest(InfoRow test){
@@ -34,7 +36,7 @@ public class KNN {
 	//Returns Prediction of Classification
 	public Object getPrediction(){
 		Instance instance = new DenseInstance(this.testing.getRawValues());
-		Object prediction = knn.classify(instance);
+		Object prediction = this.javasmo.classify(instance);
 		
 		
 		return ranges[(int)(double)prediction];
@@ -70,13 +72,11 @@ public class KNN {
 		}
 		array[0] = min;
 		array[1] = max;
-		return array;
-				
-			
+		return array;		
 	}
+	
 	//Finds Specific class for boat data
 	private int classify(double dataConversion, double minValue, double maxValue) {
-
 		int count = 0;
 		double currentValue = minValue;
 		double change = (maxValue - minValue)/numClasses;
@@ -99,11 +99,11 @@ public class KNN {
 			this.ranges[i] = Integer.toString((int)(temp+1))+"-"+Integer.toString(upper)+ " BOATS";
 			temp = upper;
 		}
-		this.ranges[numClasses] = Integer.toString((int)temp+1)+"< BOATS";		
+		this.ranges[numClasses] = Integer.toString((int)temp+1)+"< BOATS";	
 	}
-	//Classifies Boat Data in 6 classes
+	
+	//Classifies Boat Data in 4 classes
 	private void classifyBoatData(Vector<InfoRow> dataSet){
-
 		String newValue;
 		double minMax[] = getMinMax(dataSet);
 		getRanges(minMax[0],minMax[1]);
@@ -116,7 +116,7 @@ public class KNN {
 		}
 		
 	}
-
+	
 	public Dataset getData() {
 		return data;
 	}
@@ -134,21 +134,18 @@ public class KNN {
 	}
 
 	public Classifier getKnn() {
-		return knn;
+		return this.javasmo;
 	}
 
-	public void setKnn(Classifier knn) {
-		this.knn = knn;
+	public void setKnn(WekaClassifier jsmo) {
+		this.javasmo = jsmo;
 	}
-
+	
 	public String[] getRanges() {
 		return ranges;
 	}
-
+	
 	public void setRanges(String[] ranges) {
 		this.ranges = ranges;
 	}
-	
-	
-
 }

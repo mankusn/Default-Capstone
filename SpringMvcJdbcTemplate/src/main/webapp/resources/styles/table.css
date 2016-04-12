@@ -1,0 +1,23 @@
+td 
+{
+    height: 50px; 
+    width:50px;
+    color:#ffffff
+}
+
+#cssTable td 
+{
+    text-align:center; 
+    vertical-align:middle;
+    color:#6699ff;
+    font-size:150%;
+    box-shadow: 10px 10px 5px #888888;
+    padding: 30px;
+    background:#ffffff
+    
+}
+
+table 
+{
+	table-layout: fixed; 
+}

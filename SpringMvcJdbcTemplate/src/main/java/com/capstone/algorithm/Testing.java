@@ -92,11 +92,11 @@ public class Testing {
 				k = i;
 			}
 			kValues.add(rate);
-			System.out.println(i+": "+rate);
+			//System.out.println(i+": "+rate);
 			correct = 0.0;
 			wrong = 0.0;
 		}
-		System.out.print(k+": "+result);
+		//System.out.print(k+": "+result);
 	}
 
 }
