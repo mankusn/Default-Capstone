@@ -26,48 +26,14 @@ public class TidalAPI {
 		RestTemplate restTemplate = new RestTemplate();
 		String tidePredict = restTemplate.getForObject(request, String.class);
 		JSONObject tideObj = new JSONObject(tidePredict);
-		//System.out.println(tideObj);
-		//System.out.println(tideObj.get("data"));
-		//System.out.println(tideObj.get("query"));
+		
 		
 		JSONObject data = new JSONObject(tideObj.getString("data"));
-		//System.out.println(data);
-		//System.out.println(data.getJSONArray("weather"));
+		
 		JSONArray dat = (JSONArray) data.getJSONArray("weather");
 		JSONObject temp = dat.getJSONObject(0);
 		JSONArray tempre = temp.getJSONArray("hourly");
-		//System.out.println(dat);
-		//System.out.println(temp);
-		//System.out.println(tempre);
-		/*Vector<String> a = new Vector<String>();
-		for(int i = 0; i < dat.length(); i++){
-			a.addElement(temp.getString("swellDir"));
-			System.out.println("count " + i);
-			System.out.println(temp.getString("swellDir"));
-		}
 		
-		
-		for(int i = 0; i < a.size(); i++){
-			//System.out.println(a.elementAt(i));
-		} */
-		
-		
-		
-		//JSONArray arr = (JSONArray) data.getJSONArray("request");
-		//System.out.println(arr.get(0));
-		//System.out.println(data.get("request"));
-		//JSONArray arr = (JSONArray) tideObj.get("data");
-		//JSONObject newobj = (JSONObject) arr.get(0);
-		
-		// KEYS
-		// waterTemp_F
-		// visibility
-		// swellDir
-		// swellHeight_m
-		// winddir16Point
-		// swellPeriod_secs
-		//tideObj.getString("waterTemp_F");
-		//JSONObject waterTemp = new JSONObject(tideObj.get("waterTemp_F"));
 		
 		System.out.println(" ending test ");
 		
