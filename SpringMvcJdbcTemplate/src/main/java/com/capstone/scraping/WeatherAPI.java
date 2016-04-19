@@ -38,8 +38,10 @@ public class WeatherAPI{
 	public static String makeAPIRequest(String date){
 		//Creates the API request string
 		String APIKey = "c62d91cb9c000638716e55cbc478330f"; //Replace this if we run out of requests on an account
-		String latitude = "39.2645";
-		String longitude = "26.2777"; //Lesvos, Greece
+		/*String latitude = "39.2645";
+		String longitude = "26.2777"; //Lesvos, Greece*/
+		String latitude = "39.3700";
+		String longitude = "26.1900"; //Mithymna, Greece
 		String request = "https://api.forecast.io/forecast/" + APIKey + "/" + latitude + "," +
 						longitude;
 		if(!date.equals(""))
@@ -83,6 +85,18 @@ public class WeatherAPI{
 		JSONObject dailyForecastObj = weatherObj.getJSONObject("daily");
 		JSONArray days = (JSONArray) dailyForecastObj.get("data");
 		JSONObject dayObj = (JSONObject) days.get(1);
+		return dayObj;
+	}
+	
+	public static JSONObject getTodaysForecast() throws JSONException{
+		String request = makeAPIRequest();
+		JSONObject weatherObj = makeAPICall(request);
+		
+		//Like the past data, each day's data is a JSONObject inside a JSONArray inside a JSONObject
+		//In this case, there are 8 objects inside the array, with each one representing a day
+		JSONObject dailyForecastObj = weatherObj.getJSONObject("daily");
+		JSONArray days = (JSONArray) dailyForecastObj.get("data");
+		JSONObject dayObj = (JSONObject) days.get(0);
 		return dayObj;
 	}
 

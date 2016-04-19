@@ -12,10 +12,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.capstone.dao.ContactDAO;
-import com.capstone.dao.ContactDAOImpl;
-import com.capstone.dao.TestDAO;
-import com.capstone.dao.TestDAOImpl;
 import com.capstone.dao.WeatherDataDAO;
 import com.capstone.dao.WeatherDataDAOImpl;
 

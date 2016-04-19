@@ -34,11 +34,11 @@
 				<td>TSONIA: ${prediction4}</td>
 			</tr>
 			<tr>
-				<td colspan="2" style="">FORECAST FOR ${date}: <br> <c:forEach
+				<td colspan="2" style="">FORECAST FOR ${date} (GMT +3): <br> <c:forEach
 					var="forecast" items="${tomorrowString}" varStatus="status">
 	   				${forecast}<br>
 					</c:forEach>
-					<a class = "weather" href="https://www.wunderground.com/gr/mytilini">Detailed forecast from Weather Underground</a>
+					<a class = "weather" href="http://forecast.io/#/f/39.3680,26.1756">Detailed forecast from forecast.io</a>
 				</td>
 		</table>
 		<br>

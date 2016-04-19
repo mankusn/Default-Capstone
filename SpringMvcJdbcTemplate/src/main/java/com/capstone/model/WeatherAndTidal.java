@@ -44,9 +44,9 @@ public class WeatherAndTidal {
 		swellPeriod = TidalAPI.getSwellPeriod(tidal);*/
 	}
 	
-	public static WeatherAndTidal getTomorrow() throws JSONException{
+	public static WeatherAndTidal getToday() throws JSONException{
 		WeatherAndTidal wat = new WeatherAndTidal();
-		JSONObject weather = WeatherAPI.getNextDaysForecast();
+		JSONObject weather = WeatherAPI.getTodaysForecast();
 		wat.highTemp = WeatherAPI.getHighTemp(weather);
 		wat.lowTemp = WeatherAPI.getLowTemp(weather);
 		//wat.precipProb = WeatherAPI.getPrecipProb(weather);

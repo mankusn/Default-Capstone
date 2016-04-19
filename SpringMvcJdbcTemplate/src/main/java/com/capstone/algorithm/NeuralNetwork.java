@@ -17,8 +17,9 @@ public class NeuralNetwork {
 	private WekaClassifier javasmo;
 	private String column;
 	private String[] ranges;
-	final private int numClasses = 10;
-	public NeuralNetwork(Vector<InfoRow> d, String col){
+	private int numClasses;
+	public NeuralNetwork(Vector<InfoRow> d, String col, int numClasses){
+		this.numClasses = numClasses;
 		this.ranges = new String[numClasses + 1]; 
 		column = col;
 		SMO smo = new SMO();
@@ -27,6 +28,21 @@ public class NeuralNetwork {
 		classifyBoatData(d);
 		importData(d);
 		this.javasmo.buildClassifier(this.data);
+		//toCSV(this.data);
+	}
+	
+	public static void toCSV(Dataset data){
+		String line;
+		for(Instance inst:data){
+			line = "";
+			
+			for(int key:inst.keySet()){
+				line+=inst.get(key).toString()+",";
+			}
+			line+=inst.classValue().toString();
+			System.out.println(line);
+		}
+		System.out.println("========================================\n");		
 	}
 	
 	public void addTest(InfoRow test){

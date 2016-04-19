@@ -62,13 +62,13 @@ public class HomeController {
 //		KNN knn4 = new KNN(dataSet,5,"boatcount4");
 //		KNN knntot = new KNN(dataSet,5,"boattotal");
 		
-		NeuralNetwork knn = new NeuralNetwork(dataSet,"boatcount");
-		NeuralNetwork knn2 = new NeuralNetwork(dataSet,"boatcount2");
-		NeuralNetwork knn3 = new NeuralNetwork(dataSet,"boatcount3");
-		NeuralNetwork knn4 = new NeuralNetwork(dataSet,"boatcount4");
-		NeuralNetwork knntot = new NeuralNetwork(dataSet,"boattotal");
+		NeuralNetwork knn = new NeuralNetwork(dataSet,"boatcount", 10);
+		NeuralNetwork knn2 = new NeuralNetwork(dataSet,"boatcount2", 10);
+		NeuralNetwork knn3 = new NeuralNetwork(dataSet,"boatcount3", 10);
+		NeuralNetwork knn4 = new NeuralNetwork(dataSet,"boatcount4", 10);
+		NeuralNetwork knntot = new NeuralNetwork(dataSet,"boattotal", 16);
 
-		WeatherAndTidal tomorrowData = WeatherAndTidal.getTomorrow();
+		WeatherAndTidal tomorrowData = WeatherAndTidal.getToday();
 		WeatherAndTidalString tomorrowString = new WeatherAndTidalString(tomorrowData);
 		HashMap<String,String> tomorrowMap = WeatherAndTidalString.getMap(tomorrowString);
 		InfoRow tomorrowRow = new InfoRow(tomorrowMap);
@@ -99,7 +99,7 @@ public class HomeController {
 		model.addObject("prediction4", prediction4);
 		model.addObject("predictiontot", predictiontot);
 		model.addObject("tomorrowString",tomorrowString.stringForecast());
-		System.out.println(tomorrowData.getDate());
+		//System.out.println(tomorrowData.getDate());
 		
 
 		
@@ -131,7 +131,7 @@ public class HomeController {
 		HashMap<String,String> map = WeatherAndTidalString.getMap(obj);
 		System.out.println(map);
 		System.out.println(map.get("date"));*/
-		return model;
+		return new ModelAndView("redirect:/login");
 	}
 	
 	/*@RequestMapping(value = "/newData", method = RequestMethod.GET)
@@ -176,7 +176,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/generate", method = RequestMethod.POST)
 	public ModelAndView generateData() throws JSONException{
-		WeatherAndTidal obj = WeatherAndTidal.getTomorrow();
+		WeatherAndTidal obj = WeatherAndTidal.getToday();
 		weatherDataDAO.insert(obj);
 		return new ModelAndView("redirect:/");
 	}
@@ -196,13 +196,13 @@ public class HomeController {
     			//System.out.println(dataSet.get(index));
     		}
     		
-    		NeuralNetwork knn = new NeuralNetwork(dataSet,"boatcount");
-    		NeuralNetwork knn2 = new NeuralNetwork(dataSet,"boatcount2");
-    		NeuralNetwork knn3 = new NeuralNetwork(dataSet,"boatcount3");
-    		NeuralNetwork knn4 = new NeuralNetwork(dataSet,"boatcount4");
-    		NeuralNetwork knntot = new NeuralNetwork(dataSet,"boattotal");
+    		NeuralNetwork knn = new NeuralNetwork(dataSet,"boatcount", 32);
+    		NeuralNetwork knn2 = new NeuralNetwork(dataSet,"boatcount2", 32);
+    		NeuralNetwork knn3 = new NeuralNetwork(dataSet,"boatcount3", 16);
+    		NeuralNetwork knn4 = new NeuralNetwork(dataSet,"boatcount4", 32);
+    		NeuralNetwork knntot = new NeuralNetwork(dataSet,"boattotal", 32);
     		
-    		WeatherAndTidal tomorrowData = WeatherAndTidal.getTomorrow();
+    		WeatherAndTidal tomorrowData = WeatherAndTidal.getToday();    		
     		WeatherAndTidalString tomorrowString = new WeatherAndTidalString(tomorrowData);
     		HashMap<String,String> tomorrowMap = WeatherAndTidalString.getMap(tomorrowString);
     		InfoRow tomorrowRow = new InfoRow(tomorrowMap);
@@ -234,7 +234,9 @@ public class HomeController {
     		model.addObject("predictiontot", predictiontot);
     		model.addObject("tomorrowString",tomorrowString.stringForecast());
             model.setViewName("prediction");
-            model.addObject("date", WeatherAPI.unixTimeToDate(System.currentTimeMillis()).substring(0,10));
+            long unix = System.currentTimeMillis();
+            unix += 32400000; //For the sake of running on local, my system is 9 hours behind Lesvos
+            model.addObject("date", WeatherAPI.unixTimeToDate(unix).substring(0,10));
             return model;
         }else{
             model.setViewName("login");
