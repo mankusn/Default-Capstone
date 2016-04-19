@@ -41,8 +41,7 @@ public class WeatherDataDAOImpl implements WeatherDataDAO {
 					data.setBoatTotal(rs.getInt("total_boatcount"));
 					data.setHighTemp(rs.getInt("hightemp"));
 					data.setLowTemp(rs.getInt("lowtemp"));
-					data.setPrecip(rs.getDouble("precip"));
-					data.setPrecipProb(rs.getInt("precipchance"));
+					
 					data.setSwellDir(rs.getInt("swelldir"));
 					data.setSwellHeight(rs.getDouble("swellheight_m"));
 					data.setSwellPeriod(rs.getDouble("swellperiod_secs"));
