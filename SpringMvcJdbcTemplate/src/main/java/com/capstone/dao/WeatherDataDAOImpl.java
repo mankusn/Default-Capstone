@@ -9,10 +9,7 @@ import javax.sql.DataSource;
 import org.json.JSONException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
-import com.capstone.model.Contact;
 import com.capstone.model.WeatherAndTidal;
-import com.capstone.to.DataTO;
 
 public class WeatherDataDAOImpl implements WeatherDataDAO {
 
@@ -73,10 +70,10 @@ public class WeatherDataDAOImpl implements WeatherDataDAO {
 
 	@Override
 	public void insert(WeatherAndTidal data) {
-		String columns = "precip, watertemp_f, swellperiod_secs, swellheight_m, hightemp, lowtemp, precipchance, windspeed, boatcount, swelldir, winddir, boatcount_two, boatcount_three, boatcount_four, total_boatcount";
-		String sql = "INSERT INTO public.data (" + columns + ")" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String columns = "watertemp_f, swellperiod_secs, swellheight_m, hightemp, lowtemp, windspeed, boatcount, swelldir, winddir, boatcount_two, boatcount_three, boatcount_four, total_boatcount";
+		String sql = "INSERT INTO public.data (" + columns + ")" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		jdbcTemplate.update(sql, data.getPrecip(), data.getWaterTemp(), data.getSwellPeriod(), data.getSwellHeight(), data.getHighTemp(), data.getLowTemp(), data.getPrecipProb(), data.getWindSpeed(), data.getBoatCount(), data.getSwellDir(), data.getWindDir(), data.getBoatCount2(), data.getBoatCount3(), data.getBoatCount4(), data.getBoatTotal());
+		jdbcTemplate.update(sql, data.getWaterTemp(), data.getSwellPeriod(), data.getSwellHeight(), data.getHighTemp(), data.getLowTemp(), data.getWindSpeed(), data.getBoatCount(), data.getSwellDir(), data.getWindDir(), data.getBoatCount2(), data.getBoatCount3(), data.getBoatCount4(), data.getBoatTotal());
 		
 	}
 
