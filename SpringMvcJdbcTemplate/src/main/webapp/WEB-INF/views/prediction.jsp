@@ -43,8 +43,8 @@
 					<a class = "weather" href="http://forecast.io/#/f/39.3680,26.1756">Detailed forecast from forecast.io</a>
 				</td>
 				<td>
-				<button class = "button" onclick = "location.href='/capstone/prediction'">Refresh</button><br><br><br>
-				<button class = "button" onclick = "location.href='/capstone/logout'">Logout</button>
+				<button class = "button" onclick = "location.href='/prediction'">Refresh</button><br><br><br>
+				<button class = "button" onclick = "location.href='/logout'">Logout</button>
 				</td>
 			</tr>
 		</table>
