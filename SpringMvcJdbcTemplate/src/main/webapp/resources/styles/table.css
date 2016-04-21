@@ -7,10 +7,11 @@ td
 
 #cssTable td 
 {
+	font-family: sans-serif;
     text-align:center; 
     vertical-align:middle;
     color:#6699ff;
-    font-size:150%;
+    font-size:125%;
     box-shadow: 10px 10px 5px #888888;
     padding: 30px;
     background:#ffffff

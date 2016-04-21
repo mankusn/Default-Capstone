@@ -13,10 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WeatherAndTidalString {
 	private String highTemp; 
-	private String lowTemp; 
-	private String precipProb; 
-	private String windSpeed; 
-	private String precip;
+	private String lowTemp;
+	private String windSpeed;
 	private String swellDir; 
 	private String waterTemp; 
 	private String swellHeight; 
@@ -31,9 +29,7 @@ public class WeatherAndTidalString {
 	public WeatherAndTidalString(WeatherAndTidal obj){
 		highTemp = String.valueOf(obj.getHighTemp());
 		lowTemp = String.valueOf(obj.getLowTemp());
-		precipProb = String.valueOf(obj.getPrecipProb());
 		windSpeed = String.valueOf(obj.getWindSpeed());
-		precip = String.valueOf(obj.getPrecip());
 		swellDir = String.valueOf(obj.getSwellDir());
 		waterTemp = String.valueOf(obj.getWaterTemp());
 		swellHeight = String.valueOf(obj.getSwellHeight());
@@ -89,28 +85,12 @@ public class WeatherAndTidalString {
 		this.lowTemp = lowTemp;
 	}
 
-	public String getPrecipProb() {
-		return precipProb;
-	}
-
-	public void setPrecipProb(String precipProb) {
-		this.precipProb = precipProb;
-	}
-
 	public String getWindSpeed() {
 		return windSpeed;
 	}
 
 	public void setWindSpeed(String windSpeed) {
 		this.windSpeed = windSpeed;
-	}
-
-	public String getPrecip() {
-		return precip;
-	}
-
-	public void setPrecip(String precip) {
-		this.precip = precip;
 	}
 
 	public String getSwellDir() {

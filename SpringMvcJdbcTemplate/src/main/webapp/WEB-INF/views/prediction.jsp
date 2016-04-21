@@ -19,11 +19,10 @@
 <body bgcolor="#76B852">
 	<div align="center">
 		<img src="<c:url value="/resources/images/refugee_prediction.png" />"
-			alt="" /> <a class = "logout" href="logout">Logout</a> <br> <br> <br>
+			alt="" /> <br> <br> <br>
 		<table width=700 height=400 id="cssTable">
 			<tr>
-				<td colspan="2" style="width: 100%">TODAY'S PREDICTION:
-					${predictiontot}</td>
+				<td colspan="2" style="width: 100%">PREDICTION FOR ${date} (GMT +3)</td>
 			</tr>
 			<tr>
 				<td>MITHIMNA: ${prediction}</td>
@@ -34,12 +33,20 @@
 				<td>TSONIA: ${prediction4}</td>
 			</tr>
 			<tr>
-				<td colspan="2" style="">FORECAST FOR ${date} (GMT +3): <br> <c:forEach
+				<td colspan="2" >TOTAL: ${predictiontot}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left; padding-left: 62px">TODAY'S FORECAST<br> <c:forEach
 					var="forecast" items="${tomorrowString}" varStatus="status">
 	   				${forecast}<br>
 					</c:forEach>
 					<a class = "weather" href="http://forecast.io/#/f/39.3680,26.1756">Detailed forecast from forecast.io</a>
 				</td>
+				<td>
+				<button class = "button" onclick = "location.href='/capstone/prediction'">Refresh</button><br><br><br>
+				<button class = "button" onclick = "location.href='/capstone/logout'">Logout</button>
+				</td>
+			</tr>
 		</table>
 		<br>
 	</div>

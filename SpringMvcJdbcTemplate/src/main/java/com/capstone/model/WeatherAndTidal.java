@@ -49,10 +49,9 @@ public class WeatherAndTidal {
 		JSONObject weather = WeatherAPI.getTodaysForecast();
 		wat.highTemp = WeatherAPI.getHighTemp(weather);
 		wat.lowTemp = WeatherAPI.getLowTemp(weather);
-		//wat.precipProb = WeatherAPI.getPrecipProb(weather);
+		wat.date = WeatherAPI.getDate(weather);
 		wat.windDir = WeatherAPI.getWindDir(weather);
 		wat.windSpeed = WeatherAPI.getWindSpeed(weather);
-		//wat.precip = WeatherAPI.getPrecip(weather);
 		
 		JSONObject tidal = TidalAPI.isolateTideData(TidalAPI.getTideDataForTime("1200",TidalAPI.getTideForecast()));
 		wat.swellDir = TidalAPI.getSwellDir(tidal);
